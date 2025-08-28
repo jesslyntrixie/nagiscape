@@ -1,0 +1,745 @@
+@font-face {
+    font-family: 'MiSans';
+    src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MiSans';
+    src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MiSans';
+    src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Monospace';
+    src: url('https://assets-persist.lovart.ai/agent-static-assets/AlibabaSans-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'MiSans', sans-serif;
+    background-color: #2c2a3e;
+    color: #f5f0e9;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 1920px; /* Max-width for very large screens */
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    height: 80px;
+    background-color: rgba(44, 42, 62, 0.95);
+    border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+}
+
+.logo {
+    font-family: 'Monospace', monospace;
+    font-size: 28px;
+    color: #f7e6b9;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #d4c3a0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.my-mixes-btn {
+    background-color: rgba(212, 195, 160, 0.2);
+    color: #f5f0e9;
+    border: 1px solid rgba(212, 195, 160, 0.4);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.my-mixes-btn:hover {
+    background-color: rgba(212, 195, 160, 0.3);
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #d4c3a0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: #2c2a3e;
+}
+
+/* Main Content Styles */
+.main-content {
+    display: flex;
+    flex: 1;
+    padding: 30px 40px;
+    gap: 30px;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Panel Styles - Glassmorphism */
+.panel {
+    background-color: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-panel {
+    flex: 1;
+    min-width: 320px; /* Minimum width for the left panel */
+}
+
+.right-panel {
+    flex: 2;
+}
+
+.panel-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #f7e6b9;
+}
+
+/* Music Player Styles */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+}
+
+.volume-icon {
+    font-size: 22px;
+    color: #d4c3a0;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(212, 195, 160, 0.3);
+    outline: none;
+    cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f7e6b9;
+    cursor: pointer;
+}
+
+.track-list {
+    overflow-y: auto;
+    flex: 1; /* Allow track list to fill available space */
+    padding-right: 10px;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: rgba(212, 195, 160, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.track-item:hover {
+    background-color: rgba(212, 195, 160, 0.2);
+}
+
+.track-item.active {
+    background-color: rgba(247, 230, 185, 0.2);
+    border-left: 4px solid #f7e6b9;
+    padding-left: 11px;
+}
+
+.track-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #d4c3a0;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #2c2a3e;
+    flex-shrink: 0;
+}
+
+.track-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.track-title {
+    font-size: 16px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    font-size: 14px;
+    color: rgba(245, 240, 233, 0.7);
+}
+
+.track-controls {
+    font-size: 22px;
+    color: #f7e6b9;
+}
+
+/* Ambience Mixer Styles */
+.ambience-list {
+    display: flex; /* Changed from grid */
+    flex-direction: column; /* Stacks items vertically */
+    gap: 15px; /* Spacing between items */
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 10px;
+}
+
+.ambience-item {
+    background-color: rgba(212, 195, 160, 0.1);
+    border-radius: 12px;
+    padding: 15px 20px; /* Adjusted padding */
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center; /* Vertically align items */
+    gap: 15px; /* Add gap between header and slider */
+}
+
+.ambience-item:hover {
+    background-color: rgba(212, 195, 160, 0.2);
+}
+
+.ambience-header {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+    width: 200px; /* Give a fixed width to align sliders */
+}
+
+.ambience-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgba(247, 230, 185, 0.2);
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #f7e6b9;
+}
+
+.ambience-name {
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.ambience-slider {
+    width: 100%; /* Slider takes remaining width */
+}
+
+/* Footer Player Bar Styles */
+.player-bar {
+    height: 90px;
+    background-color: rgba(44, 42, 62, 0.95);
+    border-top: 1px solid rgba(212, 195, 160, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    gap: 20px; /* Add gap for smaller screens */
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0; /* Allow shrinking */
+}
+
+.now-playing-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #d4c3a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #2c2a3e;
+    flex-shrink: 0;
+}
+
+.now-playing-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Hide overflowed text */
+}
+
+.now-playing-label {
+    font-size: 14px;
+    color: rgba(245, 240, 233, 0.7);
+}
+
+.now-playing-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #f5f0e9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.play-pause-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f7e6b9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #2c2a3e;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.play-pause-btn:hover {
+    background-color: #d4c3a0;
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(212, 195, 160, 0.2);
+    color: #f5f0e9;
+    border: 1px solid rgba(212, 195, 160, 0.4);
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.save-btn:hover {
+    background-color: rgba(212, 195, 160, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(44, 42, 62, 0.5);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(212, 195, 160, 0.5);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 195, 160, 0.7);
+}
+
+/* Decorative elements - hidden on smaller screens for clarity */
+.anime-decoration {
+    position: absolute;
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.decoration-1 {
+    top: 100px;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+    border: 2px solid #f7e6b9;
+    border-radius: 50%;
+}
+
+.decoration-2 {
+    bottom: 150px;
+    right: 100px;
+    width: 300px;
+    height: 300px;
+    border: 2px dashed #d4c3a0;
+    border-radius: 50%;
+    transform: rotate(20deg);
+}
+
+.decoration-3 {
+    top: 300px;
+    right: 400px;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(247, 230, 185, 0.05);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* For Tablets and smaller screens */
+@media (max-width: 1024px) {
+    .main-content {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        overflow-y: auto;
+    }
+
+    .left-panel {
+        max-width: 100%;
+    }
+
+    .track-list, .ambience-list {
+        max-height: 300px; /* Adjust height for smaller view */
+    }
+    
+    .ambience-header {
+        width: auto; /* Allow width to be flexible */
+    }
+
+    .decoration-2, .decoration-3 {
+        display: none; /* Hide some decorations to reduce clutter */
+    }
+
+    .player-bar {
+        padding: 0 20px;
+    }
+}
+
+/* For Mobile phones */
+@media (max-width: 767px) {
+    header, .player-bar {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+
+    .my-mixes-btn {
+        padding: 6px 16px;
+        font-size: 14px;
+    }
+    
+    .save-btn {
+            font-size: 0; /* Hide text, show only icon */
+            padding: 10px;
+            gap: 0;
+    }
+    .save-btn span {
+        display: none;
+    }
+    .save-btn .ri-save-line {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .now-playing-name {
+        font-size: 16px;
+    }
+}
+/* --- Modal / Pop-up Styles --- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Sedikit lebih gelap agar fokus ke modal */
+  backdrop-filter: blur(8px); /* Efek blur untuk background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0; /* Mulai dari transparan */
+  animation: fadeIn 0.3s forwards; /* Animasi fade in */
+}
+
+/* Animasi untuk overlay */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  /* Menggunakan style panel utama (glassmorphism) */
+  background-color: rgba(50, 48, 70, 0.8); /* Warna lebih solid dari panel utama */
+  backdrop-filter: blur(15px);
+  border-radius: 16px; /* Samakan dengan .panel */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Shadow lebih jelas */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 35px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  color: #f5f0e9; /* Samakan dengan warna teks body */
+  transform: scale(0.95); /* Mulai dari skala kecil */
+  animation: scaleUp 0.3s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28); /* Animasi scale up */
+}
+
+/* Animasi untuk konten modal */
+@keyframes scaleUp {
+  to {
+    transform: scale(1);
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: rgba(245, 240, 233, 0.6); /* Warna teks transparan */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: #f7e6b9; /* Warna highlight saat hover */
+  transform: rotate(90deg);
+}
+
+.modal-content h2 {
+  font-family: 'MiSans', sans-serif; /* Pastikan font konsisten */
+  font-size: 24px;
+  font-weight: 500;
+  color: #f7e6b9; /* Warna judul panel */
+  margin-top: 0;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: rgba(245, 240, 233, 0.8); /* Warna teks yang lebih cerah */
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border-radius: 8px; /* Border radius lebih halus */
+  border: 1px solid rgba(212, 195, 160, 0.3); /* Border sesuai tema */
+  background-color: rgba(44, 42, 62, 0.8); /* Background input lebih gelap */
+  color: #f5f0e9;
+  font-size: 16px;
+  font-family: 'MiSans', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #d4c3a0; /* Warna highlight saat input aktif */
+  box-shadow: 0 0 0 3px rgba(212, 195, 160, 0.2);
+}
+
+.modal-action-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  /* Menggunakan warna yang lebih cocok dengan tema (dari .my-mixes-btn) */
+  background-color: rgba(212, 195, 160, 0.3);
+  border: 1px solid rgba(212, 195, 160, 0.5);
+  color: #f7e6b9;
+  font-size: 16px;
+  font-weight: 500; /* Medium weight */
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.modal-action-btn:hover {
+  background-color: rgba(212, 195, 160, 0.4);
+  box-shadow: 0 4px 15px rgba(212, 195, 160, 0.1);
+}
+
+.modal-toggle-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(245, 240, 233, 0.8);
+}
+
+.modal-toggle-text span {
+  color: #f7e6b9; /* Warna highlight */
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.modal-toggle-text span:hover {
+  text-decoration: underline;
+  color: #d4c3a0;
+}
+
+/* MY MIXES MODAL */
+
+.my-mixes-list {
+  margin-top: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.mix-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 5px;
+  background-color: #3e3e52;
+  margin-bottom: 10px;
+}
+
+.mix-item-name {
+  font-weight: 500;
+}
+
+/* .mix-item-controls .control-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 8px;
+} */
+ .mix-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* Membuatnya jadi lingkaran */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-left: 8px;
+}
+
+.mix-icon-btn i {
+  font-size: 18px; /* Ukuran ikon */
+  color: #c0c0e0; /* Warna ikon default */
+  transition: color 0.2s ease;
+}
+
+/* Style saat mouse diarahkan (hover) */
+.mix-icon-btn.load-icon:hover {
+  background-color: rgba(138, 79, 255, 0.2);
+}
+
+.mix-icon-btn.load-icon:hover i {
+  color: #8a4fff; /* Warna ungu tema */
+}
+
+.mix-icon-btn.delete-icon:hover {
+  background-color: rgba(255, 77, 77, 0.2);
+}
+
+.mix-icon-btn.delete-icon:hover i {
+  color: #ff4d4d; /* Warna merah untuk delete */
+}
+
+.control-btn.load-btn {
+  background-color: #8a4fff;
+  color: white;
+}
+
+.control-btn.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.empty-list-text {
+  text-align: center;
+  color: #aaa;
+  padding: 20px 0;
+}

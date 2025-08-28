@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<!-- saved from url=(0291)https://assets-persist.lovart.ai/agent_images/90066be5-1fbb-4931-a3c5-f2ad29e14e32.html?_gl=1*10ocoux*_gcl_aw*R0NMLjE3NTYyNjkwMTIuQ2p3S0NBand0clhGQmhCaUVpd0FFS2VuMTczcHFzZ2RrLTF3d00tMGU5V3ZobWpmSnVNMlNmRGo2WjhHc2dxWFFNWXo4Zmlidlo3eW5Sb0M2Z29RQXZEX0J3RQ..*_gcl_au*MTI2ODExNzgwOS4xNzU2MjY0Mjkw -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagiscape - Lofi Music App</title>
+    <link href="./Nagiscape - Lofi Music App_files/remixicon.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Monospace';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/AlibabaSans-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MiSans', sans-serif;
+            background-color: #2c2a3e;
+            color: #f5f0e9;
+            width: 1920px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 1920px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            height: 80px;
+            background-color: rgba(44, 42, 62, 0.95);
+            border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+        }
+
+        .logo {
+            font-family: 'Monospace', monospace;
+            font-size: 28px;
+            color: #f7e6b9;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #d4c3a0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .my-mixes-btn {
+            background-color: rgba(212, 195, 160, 0.2);
+            color: #f5f0e9;
+            border: 1px solid rgba(212, 195, 160, 0.4);
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .my-mixes-btn:hover {
+            background-color: rgba(212, 195, 160, 0.3);
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #d4c3a0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: #2c2a3e;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            display: flex;
+            flex: 1;
+            padding: 30px 40px;
+            gap: 30px;
+        }
+
+        /* Panel Styles - Glassmorphism */
+        .panel {
+            background-color: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-panel {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .right-panel {
+            flex: 2;
+        }
+
+        .panel-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 22px;
+            font-weight: 500;
+            color: #f7e6b9;
+        }
+
+        /* Music Player Styles */
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+        }
+
+        .volume-icon {
+            font-size: 22px;
+            color: #d4c3a0;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(212, 195, 160, 0.3);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f7e6b9;
+            cursor: pointer;
+        }
+
+        .track-list {
+            overflow-y: auto;
+            max-height: 600px;
+            padding-right: 10px;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: rgba(212, 195, 160, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .track-item:hover {
+            background-color: rgba(212, 195, 160, 0.2);
+        }
+
+        .track-item.active {
+            background-color: rgba(247, 230, 185, 0.2);
+            border-left: 4px solid #f7e6b9;
+        }
+
+        .track-thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #d4c3a0;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #2c2a3e;
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-title {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .track-artist {
+            font-size: 14px;
+            color: rgba(245, 240, 233, 0.7);
+        }
+
+        .track-controls {
+            font-size: 22px;
+            color: #f7e6b9;
+        }
+
+        /* Ambience Mixer Styles */
+        .ambience-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            overflow-y: auto;
+            max-height: 600px;
+            padding-right: 10px;
+        }
+
+        .ambience-item {
+            background-color: rgba(212, 195, 160, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .ambience-item:hover {
+            background-color: rgba(212, 195, 160, 0.2);
+        }
+
+        .ambience-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ambience-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(247, 230, 185, 0.2);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #f7e6b9;
+        }
+
+        .ambience-name {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .ambience-slider {
+            width: 100%;
+        }
+
+        /* Footer Player Bar Styles */
+        .player-bar {
+            height: 90px;
+            background-color: rgba(44, 42, 62, 0.95);
+            border-top: 1px solid rgba(212, 195, 160, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .now-playing {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .now-playing-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #d4c3a0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #2c2a3e;
+        }
+
+        .now-playing-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .now-playing-label {
+            font-size: 14px;
+            color: rgba(245, 240, 233, 0.7);
+        }
+
+        .now-playing-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f5f0e9;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .play-pause-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f7e6b9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #2c2a3e;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .play-pause-btn:hover {
+            background-color: #d4c3a0;
+        }
+
+        .save-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(212, 195, 160, 0.2);
+            color: #f5f0e9;
+            border: 1px solid rgba(212, 195, 160, 0.4);
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background-color: rgba(212, 195, 160, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(44, 42, 62, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 195, 160, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 195, 160, 0.7);
+        }
+
+        /* Anime aesthetic decorative elements */
+        .anime-decoration {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .decoration-1 {
+            top: 100px;
+            left: 50px;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #f7e6b9;
+            border-radius: 50%;
+        }
+
+        .decoration-2 {
+            bottom: 150px;
+            right: 100px;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #d4c3a0;
+            border-radius: 50%;
+            transform: rotate(20deg);
+        }
+
+        .decoration-3 {
+            top: 300px;
+            right: 400px;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(247, 230, 185, 0.05);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+    </style>
+<style id="custom-cursor" type="text/css">body button, body [type='button'], body input[type='reset'], body input[type='submit'], body [role="button"], ::-webkit-search-cancel-button, ::-webkit-search-decoration, ::-webkit-scrollbar-button, ::-webkit-file-upload-button, [role^=button], .cc_pointer, [type="search"]::-webkit-search-cancel-button, a, select, [type="search"]::-webkit-search-decoration, .paper-button, .ytp-progress-bar-container, input[type=submit], :link, :visited, a > *, img,  ::-webkit-scrollbar-button, .ogdlpmhglpejoiomcodnpjnfgcpmgale_pointer, ::-webkit-file-upload-button, .ytp-volume-panel, #myogdlpmhglpejoiomcodnpjnfgcpmgale .icon, body .custom-cursor-on-hover {cursor: url("data:image/png;base64,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") 2 2, pointer !important;} html,body,body select,body .custom-cursor-default-hover {cursor: url("data:image/png;base64,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") 1 2, auto !important;}</style></head>
+<body>
+    <div class="container">
+        <!-- Decorative Elements -->
+        <div class="anime-decoration decoration-1"></div>
+        <div class="anime-decoration decoration-2"></div>
+        <div class="anime-decoration decoration-3"></div>
+
+        <!-- Header -->
+        <header>
+            <div class="logo">nagiscape<span>_</span></div>
+            <div class="header-right">
+                <button class="my-mixes-btn">My Mixes</button>
+                <div class="profile-icon">
+                    <i class="ri-user-line"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel - Music Player -->
+            <div class="panel left-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Music Tracks</h2>
+                </div>
+                
+                <div class="volume-control">
+                    <i class="ri-volume-up-line volume-icon"></i>
+                    <input type="range" min="0" max="100" value="70" class="slider custom-cursor-default-hover">
+                </div>
+                
+                <div class="track-list">
+                    <div class="track-item active">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title custom-cursor-on-hover">Rainy Day Dreams</div>
+                            <div class="track-artist custom-cursor-on-hover">Lofi Collective</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-pause-mini-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item custom-cursor-on-hover">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title">Midnight Study</div>
+                            <div class="track-artist">Chill Beats</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title">Cozy Memories</div>
+                            <div class="track-artist">Sleepy Cat</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title">Autumn Leaves</div>
+                            <div class="track-artist">Warm Coffee</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title custom-cursor-on-hover">Gentle Piano</div>
+                            <div class="track-artist">Moonlight Dreams</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill custom-cursor-on-hover"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title">Sunset Vibes</div>
+                            <div class="track-artist">Orange Sky</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="track-item">
+                        <div class="track-thumbnail">
+                            <i class="ri-music-2-line"></i>
+                        </div>
+                        <div class="track-info">
+                            <div class="track-title">Dreamy Nights</div>
+                            <div class="track-artist">Starry Skies</div>
+                        </div>
+                        <div class="track-controls">
+                            <i class="ri-play-mini-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Panel - Ambience Mixer -->
+            <div class="panel right-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Ambience Mixer</h2>
+                </div>
+                
+                <div class="ambience-list">
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-rainy-line"></i>
+                            </div>
+                            <div class="ambience-name">Rain</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="80" class="slider ambience-slider custom-cursor-default-hover">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-fire-line"></i>
+                            </div>
+                            <div class="ambience-name">Fireplace</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="40" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-windy-line"></i>
+                            </div>
+                            <div class="ambience-name">Wind</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="20" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-thunderstorms-line"></i>
+                            </div>
+                            <div class="ambience-name">Thunder</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="10" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-water-flash-line"></i>
+                            </div>
+                            <div class="ambience-name">Ocean Waves</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="0" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-road-map-line"></i>
+                            </div>
+                            <div class="ambience-name">City Traffic</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="0" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-restaurant-line"></i>
+                            </div>
+                            <div class="ambience-name">Café Ambience</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="60" class="slider ambience-slider">
+                    </div>
+                    
+                    <div class="ambience-item">
+                        <div class="ambience-header">
+                            <div class="ambience-icon">
+                                <i class="ri-keyboard-line"></i>
+                            </div>
+                            <div class="ambience-name">Keyboard Typing</div>
+                        </div>
+                        <input type="range" min="0" max="100" value="30" class="slider ambience-slider">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Player Bar -->
+        <div class="player-bar">
+            <div class="now-playing">
+                <div class="now-playing-icon">
+                    <i class="ri-headphone-line"></i>
+                </div>
+                <div class="now-playing-info">
+                    <div class="now-playing-label">Now Playing</div>
+                    <div class="now-playing-name">Rainy Day Study Mix</div>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <div class="play-pause-btn">
+                    <i class="ri-pause-fill"></i>
+                </div>
+            </div>
+            
+            <div class="save-btn">
+                <i class="ri-save-line"></i>
+                Save Mix
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
