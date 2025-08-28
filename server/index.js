@@ -5,6 +5,8 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const mixRoutes = require('./routes/mixRoutes');
+const ambienceRoutes = require('./routes/ambienceRoutes'); 
+
 
 const app = express();
 
@@ -25,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/mixes', mixRoutes);
-
+app.use('/api/ambience', ambienceRoutes);
 
 // Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
