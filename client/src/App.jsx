@@ -9,6 +9,7 @@ import PlayerBar from './components/PlayerBar.jsx';
 import AuthModal from './components/AuthModal.jsx';
 import SaveMixModal from './components/SaveMixModal.jsx';
 import SettingsPage from './components/SettingsPage';
+import CreditsPage from './components/CreditsPage.jsx';
 
 function MainLayout() {
 
@@ -56,6 +57,12 @@ function MainLayout() {
     setMyMixes(myMixes.filter(mix => mix._id !== mixId));
   };
 
+  const tracks=[{title: "track1",
+  displayName: "display of track 1",                  // Nama untuk ditampilkan di UI (opsional)
+  artistName: "artist of track 1",
+  url: "www.url.com",
+  sourceUrl: "www.sourceurl.com"}];
+
 
   return (
     <div className="container">
@@ -70,7 +77,7 @@ function MainLayout() {
 
 
       <main className="main-content">
-        <MusicPlayer />
+        <MusicPlayer tracks={tracks}/>
         <AmbienceMixer />
       </main>
       <PlayerBar onSaveMixClick={handleSaveMixClick}/>
@@ -92,11 +99,21 @@ function MainLayout() {
 
 
 function App() {
+  const tracks=[{title: "track1",
+  displayName: "display of track 1",                  // Nama untuk ditampilkan di UI (opsional)
+  artistName: "artist of track 1",
+  url: "www.url.com",
+  sourceUrl: "www.sourceurl.com"}];  
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route 
+          path="/credits" 
+          element={<CreditsPage musicTracks={tracks} ambienceSounds={tracks} />} 
+        />
       </Routes>
     </BrowserRouter>
   );

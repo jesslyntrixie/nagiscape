@@ -1014,3 +1014,107 @@ header {
 .toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #d4c3a0; transition: .4s; border-radius: 50%; }
 input:checked + .toggle-slider { background-color: #f7e6b9; }
 input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: translateX(22px); }
+
+
+
+
+/* CREDITS PAGE */
+/* /src/index.css */
+
+/* Ganti .settings-page-container dengan ini jika hanya dipakai di credits */
+.credits-page-container {
+  max-width: 1200px; /* Layout lebih lebar */
+  margin: 40px auto;
+  padding: 20px 40px;
+  color: #f5f0e9;
+}
+
+.credits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dua kolom dengan lebar sama */
+  gap: 40px; /* Jarak antar kolom */
+  margin-top: 30px;
+}
+
+.credits-column .credits-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+}
+
+.credits-column .credits-header i {
+  font-size: 24px;
+  color: #d4c3a0;
+}
+
+.credits-column .credits-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #f7e6b9;
+}
+
+.credits-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.credit-item {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(212, 195, 160, 0.05);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.credit-item:hover {
+  border-color: rgba(212, 195, 160, 0.2);
+  background-color: rgba(212, 195, 160, 0.1);
+  transform: translateY(-2px);
+}
+
+.credit-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #f5f0e9;
+  margin-bottom: 4px;
+}
+
+.credit-artist {
+  font-size: 14px;
+  color: rgba(245, 240, 233, 0.7);
+  margin-bottom: 12px;
+}
+
+.credit-source {
+  font-size: 13px;
+  color: #d4c3a0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start; /* Tombol source rata kiri */
+}
+
+.credit-source:hover {
+  color: #f7e6b9;
+  text-decoration: underline;
+}
+
+/* Responsif untuk layar lebih kecil */
+@media (max-width: 800px) {
+  .credits-grid {
+    grid-template-columns: 1fr; /* Tumpuk menjadi satu kolom */
+    gap: 50px; /* Jarak lebih besar saat ditumpuk */
+  }
+
+  .credits-page-container {
+    padding: 20px;
+  }
+}

@@ -49,10 +49,15 @@ function SettingsPage() {
         
         {/* About Section */}
         <div className="settings-section">
-          <h3>About</h3>
-          <p>Nagiscape v1.0.0</p>
+         <h3>About & Credits</h3>
+          <p>Nagiscape v1.0.0 - A relaxing soundscape experience.</p>
+          <div className="form-actions">
+            {/* Gunakan Link dari React Router */}
+            <Link to="/credits" className="action-btn">
+              View Credits & Attributions
+            </Link>
+          </div>
         </div>
-
       </div>
     </div>
   );
