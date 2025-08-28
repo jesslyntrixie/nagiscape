@@ -743,3 +743,274 @@ header {
   color: #aaa;
   padding: 20px 0;
 }
+
+
+/* MY MIXES DROPDOWN */
+/* /src/index.css */
+
+/* Kontainer untuk tombol dan dropdown agar dropdown bisa diposisikan relatif terhadapnya */
+.my-mixes-container {
+  position: relative; /* Ini adalah kuncinya! */
+}
+
+/* Style untuk dropdown panel */
+.mixes-dropdown-container {
+  position: absolute;
+  top: 120%; /* Posisi sedikit di bawah tombol */
+  right: 0;
+  width: 300px;
+  background-color: #2c2c3e; /* Warna panel */
+  border-radius: 8px;
+  border: 1px solid #4a4a6a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  overflow: hidden; /* agar border-radius terlihat di semua sudut */
+}
+
+.mixes-dropdown-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #4a4a6a;
+}
+
+.mixes-dropdown-header h4 {
+  margin: 0;
+  color: #e0e0e0;
+}
+
+.mixes-dropdown-list {
+  padding: 8px;
+  max-height: 250px; /* Batas tinggi, setelah itu akan scroll */
+  overflow-y: auto;
+}
+
+/* Style untuk item di dalam dropdown (sedikit diubah dari versi modal) */
+.mix-item-dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.mix-item-dropdown:hover {
+  background-color: #3e3e52;
+}
+/* ================================================================= */
+/* PROFILE DROPDOWN & SETTINGS PAGE STYLES          */
+/* ================================================================= */
+
+/* --- Dropdown Profil --- */
+.profile-container { 
+  position: relative; 
+}
+
+.profile-dropdown-container {
+  position: absolute;
+  top: 120%; /* Posisi sedikit di bawah ikon */
+  right: 0;
+  width: 240px; /* Sedikit lebih lebar */
+  /* Menggunakan style panel utama (glassmorphism) */
+  background-color: rgba(44, 42, 62, 0.8); /* Background lebih solid */
+  backdrop-filter: blur(10px);
+  border-radius: 12px; /* Border radius lebih besar */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  padding: 8px;
+  animation: fadeIn 0.2s ease-out; /* Animasi halus */
+}
+
+.dropdown-item {
+  padding: 10px 14px;
+  border-radius: 8px; /* Border radius lebih besar */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #f5f0e9; /* Warna teks utama */
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+}
+
+.dropdown-item:hover { 
+  background-color: rgba(212, 195, 160, 0.2); /* Warna hover konsisten */
+}
+
+.user-email { 
+  color: #d4c3a0; /* Warna highlight sekunder */
+  font-size: 14px; 
+  cursor: default; 
+  font-weight: 500;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(212, 195, 160, 0.2); /* Garis pemisah */
+}
+
+.user-email:hover { 
+  background-color: transparent; 
+}
+
+.logout-item { 
+  color: #ff8a8a; /* Warna untuk aksi destruktif */
+}
+.logout-item:hover {
+  background-color: rgba(255, 77, 77, 0.2);
+}
+
+
+/* --- Halaman Settings --- */
+.settings-page-container {
+  max-width: 800px;
+  margin: 40px auto; /* Memberi jarak atas-bawah */
+  padding: 20px;
+  color: #f5f0e9; /* Warna teks utama */
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 195, 160, 0.2); /* Garis pemisah konsisten */
+}
+
+.settings-header h2 {
+  margin: 0 0 0 20px;
+  font-size: 28px; /* Ukuran font lebih besar, seperti .logo */
+  font-weight: 500;
+  color: #f7e6b9; /* Warna highlight utama */
+}
+
+.back-link {
+  color: #d4c3a0; /* Warna highlight sekunder */
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+.back-link:hover {
+  color: #f7e6b9;
+}
+
+/* Menggunakan style .panel untuk setiap seksi pengaturan */
+.settings-section {
+  background-color: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px 30px; /* Padding lebih besar */
+  margin-bottom: 25px;
+}
+
+.settings-section h3 { 
+  margin-top: 0; 
+  font-size: 20px; /* Ukuran font seperti .panel-title */
+  font-weight: 500;
+  color: #f7e6b9; /* Warna highlight utama */
+  margin-bottom: 25px; /* Jarak bawah dari judul ke konten */
+}
+
+.settings-section label { 
+  display: block; 
+  margin: 18px 0 8px; /* Jarak antar input lebih besar */
+  color: #d4c3a0; /* Warna highlight sekunder */
+  font-size: 15px;
+}
+
+/* Menggunakan style input dari modal agar konsisten */
+.settings-section input[type="password"] {
+  width: 100%;
+  max-width: 450px; /* Sedikit lebih lebar */
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 195, 160, 0.3);
+  background-color: rgba(44, 42, 62, 0.8);
+  color: #f5f0e9;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.settings-section input[type="password"]:focus {
+  outline: none;
+  border-color: #d4c3a0;
+  box-shadow: 0 0 0 3px rgba(212, 195, 160, 0.2);
+}
+
+/* Menggunakan style tombol dari modal agar konsisten */
+.action-btn {
+  padding: 10px 20px;
+  width: auto;
+  border: 1px solid rgba(212, 195, 160, 0.5);
+  background-color: rgba(212, 195, 160, 0.3);
+  color: #f7e6b9;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.action-btn:hover {
+  background-color: rgba(212, 195, 160, 0.4);
+}
+
+.delete-btn { 
+  background-color: rgba(255, 77, 77, 0.2); 
+  border-color: rgba(255, 77, 77, 0.5);
+  color: #ff8a8a;
+}
+.delete-btn:hover {
+  background-color: rgba(255, 77, 77, 0.3);
+}
+
+.form-actions { 
+  margin-top: 25px; 
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
+}
+
+.link-btn { 
+  color: #d4c3a0; /* Warna link lebih lembut */
+  text-decoration: none; 
+  font-size: 14px; 
+  transition: color 0.2s ease;
+}
+.link-btn:hover {
+  color: #f7e6b9;
+  text-decoration: underline;
+}
+
+.danger-zone { 
+  border-color: rgba(255, 77, 77, 0.4); 
+}
+.danger-zone p {
+  color: rgba(245, 240, 233, 0.7);
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.preference-item { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  max-width: 450px; 
+}
+.preference-item span {
+  font-size: 16px;
+}
+
+.save-changes-container { 
+  text-align: right; 
+  margin-top: 10px;
+}
+
+/* --- Toggle Switch (Sama seperti sebelumnya, sudah bagus) --- */
+.switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(44, 42, 62, 0.8); border: 1px solid rgba(212, 195, 160, 0.3); transition: .4s; border-radius: 28px; }
+.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #d4c3a0; transition: .4s; border-radius: 50%; }
+input:checked + .toggle-slider { background-color: #f7e6b9; }
+input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: translateX(22px); }

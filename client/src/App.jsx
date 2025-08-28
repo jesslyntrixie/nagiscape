@@ -1,18 +1,20 @@
 // /client/src/App.jsx
 
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import MusicPlayer from './components/MusicPlayer.jsx';
 import AmbienceMixer from './components/AmbienceMixer.jsx';
 import PlayerBar from './components/PlayerBar.jsx';
 import AuthModal from './components/AuthModal.jsx';
 import SaveMixModal from './components/SaveMixModal.jsx';
-import MyMixesModal from './components/MyMixesModal.jsx';
+import SettingsPage from './components/SettingsPage';
 
-function App() {
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false); // Set ke false lagi
-  const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(true);
-  const [isMyMixesModalOpen, setMyMixesModalOpen] = useState(false);
+function MainLayout() {
+
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false); 
+  const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(false);
+  const [isMyMixesModalOpen, setMyMixesModalOpen] = useState(false); 
 
   // ----- DUMMY DATA -------
   const [user, setUser] = useState(null);
@@ -21,6 +23,7 @@ function App() {
     { _id: '2', mixName: 'Hujan Sore Santai', settings: { musicVolume: 60 } },
     { _id: '3', mixName: 'Kerja di Kafe', settings: { musicVolume: 80 } },
   ]);
+
   // ------------------------
 
   
@@ -41,18 +44,6 @@ function App() {
     
   };
 
-  const handleOpenMyMixes = () => {
-    // TODO: KALAU SDH LOGIN 
-    const userIsLoggedIn = true; 
-    if (userIsLoggedIn) {
-      console.log('--- LOGIKA FETCH MY MIXES API DISINI ---');
-      setMyMixesModalOpen(true);
-    } else {
-      // Jika belum login, paksa login dulu
-      setAuthModalOpen(true);
-    }
-  };
-
   const loadMixSettings = (settings) => {
     console.log('Memuat settings:', settings);
     // Di sini update state utama aplikasi setelah load satu mix
@@ -69,7 +60,13 @@ function App() {
   return (
     <div className="container">
      
-      <Header onMyMixesClick={handleOpenMyMixes}/>
+      <Header 
+        user={user}
+        onLoginClick={() => setAuthModalOpen(true)}
+        myMixes={myMixes}
+        onLoadMix={loadMixSettings}
+        onDeleteMix={deleteMix}
+      /> 
 
 
       <main className="main-content">
@@ -88,14 +85,20 @@ function App() {
         onClose={() => setSaveMixModalOpen(false)}
         onSave={saveMixToServer}
       />
-      <MyMixesModal 
-        isOpen={isMyMixesModalOpen}
-        onClose={() => setMyMixesModalOpen(false)}
-        mixes={myMixes}
-        onLoadMix={loadMixSettings}
-        onDeleteMix={deleteMix}
-      />
+  
     </div>
+  );
+}
+
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainLayout />} />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
