@@ -25,7 +25,6 @@ function CreditsPage({ musicTracks = [], ambienceSounds = [] }) {
             {musicTracks.map(track => (
               <li className="credit-item" key={track._id}>
                 <span className="credit-title">{track.title}</span>
-                <span className="credit-artist">by {track.artistName}</span>
                 <a href={track.sourceUrl} className="credit-source" target="_blank" rel="noopener noreferrer">
                   Source <i className="ri-external-link-line"></i>
                 </a>
@@ -44,7 +43,6 @@ function CreditsPage({ musicTracks = [], ambienceSounds = [] }) {
             {ambienceSounds.map(sound => (
               <li className="credit-item" key={sound._id}>
                 <span className="credit-title">{sound.name}</span>
-                <span className="credit-artist">by {sound.creatorName}</span>
                 <a href={sound.sourceUrl} className="credit-source" target="_blank" rel="noopener noreferrer">
                   Source <i className="ri-external-link-line"></i>
                 </a>
