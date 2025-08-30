@@ -6,6 +6,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const mixRoutes = require('./routes/mixRoutes');
 const ambienceRoutes = require('./routes/ambienceRoutes'); 
+const trackRoutes = require('./routes/trackRoutes'); 
 
 
 const app = express();
