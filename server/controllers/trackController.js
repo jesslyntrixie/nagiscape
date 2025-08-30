@@ -1,5 +1,5 @@
 // /server/controllers/trackController.js
-const Ambience = require('../models/Track');
+const Track = require('../models/Track');
 
 // @desc    Get all ambience sounds
 // @route   GET /api/ambience
