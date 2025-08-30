@@ -28,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/mixes', mixRoutes);
 app.use('/api/ambience', ambienceRoutes);
+app.use('/api/track', trackRoutes);
 
 // Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
