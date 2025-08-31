@@ -1,6 +1,4 @@
-// /client/src/App.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import MusicPlayer from './components/MusicPlayer.jsx';
@@ -10,27 +8,18 @@ import AuthModal from './components/AuthModal.jsx';
 import SaveMixModal from './components/SaveMixModal.jsx';
 import SettingsPage from './components/SettingsPage';
 import CreditsPage from './components/CreditsPage.jsx';
+// ⛔️ HAPUS: Import dari server tidak diperbolehkan di client-side React
+// import User from '../../server/models/User.js';
 
-function MainLayout() {
-
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false); 
+// ✅ BENAR: Terima props sebagai satu objek dan langsung destructuring
+function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(false);
-  const [isMyMixesModalOpen, setMyMixesModalOpen] = useState(false); 
+  const [isMyMixesModalOpen, setMyMixesModalOpen] = useState(false);
+  const [user, setUser] = useState(null); // State user tetap di sini untuk UI
 
-  // ----- DUMMY DATA -------
-  const [user, setUser] = useState(null);
-  const [myMixes, setMyMixes] = useState([ // 👈 Gunakan data dummy dulu untuk tes UI
-    { _id: '1', mixName: 'Fokus Coding Malam', settings: { musicVolume: 75 } },
-    { _id: '2', mixName: 'Hujan Sore Santai', settings: { musicVolume: 60 } },
-    { _id: '3', mixName: 'Kerja di Kafe', settings: { musicVolume: 80 } },
-  ]);
-
-  // ------------------------
-
-  
   const handleSaveMixClick = () => {
-    // Simulasi sudah login untuk tes
-    const userIsLoggedIn = true; 
+    const userIsLoggedIn = true; // Ganti dengan logika user sungguhan nanti
 
     if (userIsLoggedIn) {
       setSaveMixModalOpen(true);
@@ -42,13 +31,11 @@ function MainLayout() {
   const saveMixToServer = (mixName) => {
     console.log(`Menyimpan mix dengan nama: "${mixName}"`);
     // TODO: LOGIKA SAVE KE BACKEND
-    
   };
 
   const loadMixSettings = (settings) => {
     console.log('Memuat settings:', settings);
-    // Di sini update state utama aplikasi setelah load satu mix
-    setMyMixesModalOpen(false); // Tutup modal setelah load
+    setMyMixesModalOpen(false);
   };
 
   const deleteMix = (mixId) => {
@@ -57,62 +44,79 @@ function MainLayout() {
     setMyMixes(myMixes.filter(mix => mix._id !== mixId));
   };
 
-  const tracks=[{title: "track1",
-  displayName: "display of track 1",                  // Nama untuk ditampilkan di UI (opsional)
-  artistName: "artist of track 1",
-  url: "www.url.com",
-  sourceUrl: "www.sourceurl.com"}];
-
+  // ⛔️ HAPUS: Data dummy ini sudah tidak diperlukan karena data diambil dari props
+  // const tracks=[...];
 
   return (
     <div className="container">
-     
-      <Header 
+      <Header
         user={user}
         onLoginClick={() => setAuthModalOpen(true)}
-        myMixes={myMixes}
+        myMixes={myMixes} // Gunakan myMixes dari props
         onLoadMix={loadMixSettings}
         onDeleteMix={deleteMix}
-      /> 
-
-
-      <main className="main-content">
-        <MusicPlayer tracks={tracks}/>
-        <AmbienceMixer />
-      </main>
-      <PlayerBar onSaveMixClick={handleSaveMixClick}/>
-
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setAuthModalOpen(false)} 
       />
-
-      <SaveMixModal 
+      <main className="main-content">
+        <MusicPlayer tracks={musicTracks} />
+        <AmbienceMixer sounds={ambienceSounds} />
+      </main>
+      <PlayerBar onSaveMixClick={handleSaveMixClick} />
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
+      <SaveMixModal
         isOpen={isSaveMixModalOpen}
         onClose={() => setSaveMixModalOpen(false)}
         onSave={saveMixToServer}
       />
-  
     </div>
   );
 }
 
-
 function App() {
-  const tracks=[{title: "track1",
-  displayName: "display of track 1",                  // Nama untuk ditampilkan di UI (opsional)
-  artistName: "artist of track 1",
-  url: "www.url.com",
-  sourceUrl: "www.sourceurl.com"}];  
+  // ✅ BENAR: State untuk data utama aplikasi diletakkan di komponen paling atas (App)
+  const [musicTracks, setMusicTracks] = useState([]);
+  const [ambienceSounds, setAmbienceSounds] = useState([]);
+  const [myMixes, setMyMixes] = useState([ 
+      { _id: '1', mixName: 'Fokus Coding Malam', settings: { musicVolume: 75 } },
+      { _id: '2', mixName: 'Hujan Sore Santai', settings: { musicVolume: 60 } },
+      { _id: '3', mixName: 'Kerja di Kafe', settings: { musicVolume: 80 } },
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tracksResponse = await fetch('/api/track');
+        const ambienceResponse = await fetch('/api/ambience');
+        const tracksData = await tracksResponse.json();
+        const ambienceData = await ambienceResponse.json();
+        setMusicTracks(tracksData);
+        setAmbienceSounds(ambienceData);
+      } catch (error) {
+        console.error("Gagal mengambil data dari server:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout />} />
+        {/* ✅ BENAR: Kirim semua data dan fungsi yang dibutuhkan sebagai props */}
+        <Route
+          path="/"
+          element={<MainLayout
+            musicTracks={musicTracks}
+            ambienceSounds={ambienceSounds}
+            myMixes={myMixes}
+            setMyMixes={setMyMixes} // Kirim juga fungsi set-nya jika dibutuhkan di child
+          />}
+        />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route 
-          path="/credits" 
-          element={<CreditsPage musicTracks={tracks} ambienceSounds={tracks} />} 
+        <Route
+          path="/credits"
+          element={<CreditsPage musicTracks={musicTracks} ambienceSounds={ambienceSounds} />}
         />
       </Routes>
     </BrowserRouter>

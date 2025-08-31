@@ -8,7 +8,7 @@ function MusicPlayer({tracks}){
             
             <div className="volume-control">
                 <i className="ri-volume-up-line volume-icon"></i>
-                <input type="range" min="0" max="100" value="70" className="slider"/>
+                <input type="range" min="0" max="100" defaultValue="70" className="slider"/>
             </div>
             
             <div className="track-list">
