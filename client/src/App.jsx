@@ -61,6 +61,33 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
       }
     }
   };
+
+    const handleSaveMixClick = () => {
+    const userIsLoggedIn = true; // Ganti dengan logika user sungguhan nanti
+
+    if (userIsLoggedIn) {
+      setSaveMixModalOpen(true);
+    } else {
+      setAuthModalOpen(true);
+    }
+  };
+
+  const saveMixToServer = (mixName) => {
+    console.log(`Menyimpan mix dengan nama: "${mixName}"`);
+    // TODO: LOGIKA SAVE KE BACKEND
+  };
+
+  const loadMixSettings = (settings) => {
+    console.log('Memuat settings:', settings);
+    setMyMixesModalOpen(false);
+  };
+
+  const deleteMix = (mixId) => {
+    console.log('--- LOGIKA DELETE MIX API DISINI ---', mixId);
+    // Setelah berhasil hapus di server, update state di frontend
+    setMyMixes(myMixes.filter(mix => mix._id !== mixId));
+  };
+
   // ----------------------------------------------------------------------------
 
 
@@ -95,10 +122,8 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
   // -------------------------------------------------------------------------
 
 
-  const handleSaveMixClick = () => { /* ... (logika ini sudah benar) ... */ };
-  const saveMixToServer = (mixName) => { /* ... (logika ini sudah benar) ... */ };
-  const loadMixSettings = (settings) => { /* ... (logika ini sudah benar) ... */ };
-  const deleteMix = (mixId) => { /* ... (logika ini sudah benar) ... */ };
+
+
 
   return (
     <div className="container">
@@ -129,7 +154,15 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
         isPlaying={isPlaying}
         onSaveMixClick={handleSaveMixClick} 
       />
-      {/* ... (Modal lainnya) ... */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
+      <SaveMixModal
+        isOpen={isSaveMixModalOpen}
+        onClose={() => setSaveMixModalOpen(false)}
+        onSave={saveMixToServer}
+      />
     </div>
   );
 }
