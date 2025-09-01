@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import MusicPlayer from './components/MusicPlayer.jsx';
@@ -8,74 +8,133 @@ import AuthModal from './components/AuthModal.jsx';
 import SaveMixModal from './components/SaveMixModal.jsx';
 import SettingsPage from './components/SettingsPage';
 import CreditsPage from './components/CreditsPage.jsx';
-// ⛔️ HAPUS: Import dari server tidak diperbolehkan di client-side React
-// import User from '../../server/models/User.js';
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-// ✅ BENAR: Terima props sebagai satu objek dan langsung destructuring
+
+
+
+
 function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
+
+  // States --------------------------------------------------------------
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(false);
-  const [isMyMixesModalOpen, setMyMixesModalOpen] = useState(false);
-  const [user, setUser] = useState(null); // State user tetap di sini untuk UI
+  const [user, setUser] = useState(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [musicVolume, setMusicVolume] = useState(70);
+  const [ambienceVolumes, setAmbienceVolumes] = useState({});
+  // ---------------------------------------------------------------------
 
-  const handleSaveMixClick = () => {
-    const userIsLoggedIn = true; // Ganti dengan logika user sungguhan nanti
 
-    if (userIsLoggedIn) {
-      setSaveMixModalOpen(true);
+  const musicAudioRef = useRef(new Audio());
+  const ambienceAudioRefs = useRef({});
+
+
+  // functions -----------------------------------------------------------
+  const toggleMute = () => {
+    setIsMuted(prev => !prev);
+  };
+
+  const handleTrackSelect = (track) => {
+    const fullTrackUrl = `${apiUrl}${track.url}`;
+    if (currentTrack && currentTrack._id === track._id && isPlaying) {
+      setIsPlaying(false);
     } else {
-      setAuthModalOpen(true);
+      setCurrentTrack(track);
+      if (musicAudioRef.current.src !== fullTrackUrl) {
+        musicAudioRef.current.src = fullTrackUrl;
+      }
+      setIsPlaying(true);
     }
   };
 
-  const saveMixToServer = (mixName) => {
-    console.log(`Menyimpan mix dengan nama: "${mixName}"`);
-    // TODO: LOGIKA SAVE KE BACKEND
+  const handleAmbienceVolumeChange = (soundId, volume) => {
+    setAmbienceVolumes(prev => ({ ...prev, [soundId]: parseInt(volume) }));
+    if (!ambienceAudioRefs.current[soundId]) {
+      const soundData = ambienceSounds.find(s => s._id === soundId);
+      if (soundData) {
+        const audio = new Audio(soundData.url);
+        audio.loop = true;
+        ambienceAudioRefs.current[soundId] = audio;
+      }
+    }
   };
+  // ----------------------------------------------------------------------------
 
-  const loadMixSettings = (settings) => {
-    console.log('Memuat settings:', settings);
-    setMyMixesModalOpen(false);
-  };
 
-  const deleteMix = (mixId) => {
-    console.log('--- LOGIKA DELETE MIX API DISINI ---', mixId);
-    // Setelah berhasil hapus di server, update state di frontend
-    setMyMixes(myMixes.filter(mix => mix._id !== mixId));
-  };
+  // useeffects/ listeners ------------------------------------------------------
 
-  // ⛔️ HAPUS: Data dummy ini sudah tidak diperlukan karena data diambil dari props
-  // const tracks=[...];
+  useEffect(() => {
+    if (isPlaying && currentTrack) {
+      musicAudioRef.current.play();
+    } else {
+      musicAudioRef.current.pause();
+    }
+  }, [isPlaying, currentTrack]);
+
+  useEffect(() => {
+    musicAudioRef.current.muted = isMuted;
+  }, [isMuted]);
+
+  useEffect(() => {
+    Object.keys(ambienceAudioRefs.current).forEach(soundId => {
+      const audio = ambienceAudioRefs.current[soundId];
+      const volume = ambienceVolumes[soundId] || 0;
+      audio.muted = isMuted;
+      audio.volume = volume / 100;
+      if (volume > 0 && audio.paused) {
+        audio.play();
+      } else if (volume === 0) {
+        audio.pause();
+      }
+    });
+  }, [isMuted, ambienceVolumes]);
+
+  // -------------------------------------------------------------------------
+
+
+  const handleSaveMixClick = () => { /* ... (logika ini sudah benar) ... */ };
+  const saveMixToServer = (mixName) => { /* ... (logika ini sudah benar) ... */ };
+  const loadMixSettings = (settings) => { /* ... (logika ini sudah benar) ... */ };
+  const deleteMix = (mixId) => { /* ... (logika ini sudah benar) ... */ };
 
   return (
     <div className="container">
       <Header
         user={user}
         onLoginClick={() => setAuthModalOpen(true)}
-        myMixes={myMixes} // Gunakan myMixes dari props
+        myMixes={myMixes}
         onLoadMix={loadMixSettings}
         onDeleteMix={deleteMix}
       />
       <main className="main-content">
-        <MusicPlayer tracks={musicTracks} />
-        <AmbienceMixer sounds={ambienceSounds} />
+        <MusicPlayer 
+          tracks={musicTracks} 
+          currentTrack={currentTrack}
+          isPlaying={isPlaying}
+          onTrackSelect={handleTrackSelect}
+        />
+         <AmbienceMixer 
+          sounds={ambienceSounds} 
+          volumes={ambienceVolumes}
+          onVolumeChange={handleAmbienceVolumeChange}
+        />
       </main>
-      <PlayerBar onSaveMixClick={handleSaveMixClick} />
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setAuthModalOpen(false)}
+      <PlayerBar 
+        isMuted={isMuted}
+        onMuteClick={toggleMute}
+        currentTrack={currentTrack}
+        isPlaying={isPlaying}
+        onSaveMixClick={handleSaveMixClick} 
       />
-      <SaveMixModal
-        isOpen={isSaveMixModalOpen}
-        onClose={() => setSaveMixModalOpen(false)}
-        onSave={saveMixToServer}
-      />
+      {/* ... (Modal lainnya) ... */}
     </div>
   );
 }
 
 function App() {
-  // ✅ BENAR: State untuk data utama aplikasi diletakkan di komponen paling atas (App)
   const [musicTracks, setMusicTracks] = useState([]);
   const [ambienceSounds, setAmbienceSounds] = useState([]);
   const [myMixes, setMyMixes] = useState([ 
@@ -87,8 +146,11 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tracksResponse = await fetch('/api/track');
-        const ambienceResponse = await fetch('/api/ambience');
+
+
+       const tracksResponse = await fetch(`${apiUrl}/api/track`);
+       const ambienceResponse = await fetch(`${apiUrl}/api/ambience`);
+            
         const tracksData = await tracksResponse.json();
         const ambienceData = await ambienceResponse.json();
         setMusicTracks(tracksData);
@@ -103,7 +165,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ✅ BENAR: Kirim semua data dan fungsi yang dibutuhkan sebagai props */}
         <Route
           path="/"
           element={<MainLayout

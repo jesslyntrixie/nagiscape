@@ -4,23 +4,23 @@ import React, { useState } from 'react';
 
 // 1. Komponen sekarang menerima props `sounds`.
 //    Kita beri nilai default array kosong `[]` agar tidak error jika props tidak dikirim.
-function AmbienceMixer({ sounds = [] }) {
+function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange }) {
 
-    // (Opsional, tapi sangat direkomendasikan) State untuk mengelola volume setiap suara
-    const [volumes, setVolumes] = useState(() => {
-        const initialVolumes = {};
-        sounds.forEach(sound => {
-            initialVolumes[sound.id] = sound.initialVolume;
-        });
-        return initialVolumes;
-    });
+    // // (Opsional, tapi sangat direkomendasikan) State untuk mengelola volume setiap suara
+    // const [volumes, setVolumes] = useState(() => {
+    //     const initialVolumes = {};
+    //     sounds.forEach(sound => {
+    //         initialVolumes[sound.id] = sound.initialVolume;
+    //     });
+    //     return initialVolumes;
+    // });
 
-    const handleVolumeChange = (soundId, newVolume) => {
-        setVolumes(prevVolumes => ({
-            ...prevVolumes,
-            [soundId]: parseInt(newVolume, 10) // pastikan nilainya integer
-        }));
-    };
+    // const handleVolumeChange = (soundId, newVolume) => {
+    //     setVolumes(prevVolumes => ({
+    //         ...prevVolumes,
+    //         [soundId]: parseInt(newVolume, 10) // pastikan nilainya integer
+    //     }));
+    // };
 
     return(
         <div className="panel right-panel">
@@ -42,10 +42,10 @@ function AmbienceMixer({ sounds = [] }) {
                             type="range" 
                             min="0" 
                             max="100" 
-                            // Gunakan state untuk value dan onChange agar slider interaktif
-                            // value={volumes[sound.id]} 
-                            defaultValue="70"
-                            onChange={(e) => handleVolumeChange(sound.id, e.target.value)}
+                            // Value slider sekarang dikontrol oleh state dari parent
+                            value={volumes[sound._id] || 0} 
+                            // Panggil fungsi dari parent setiap kali slider berubah
+                            onChange={(e) => onVolumeChange(sound._id, e.target.value)}
                             className="slider ambience-slider"
                         />
                     </div>
