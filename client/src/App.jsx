@@ -88,6 +88,11 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
     setMyMixes(myMixes.filter(mix => mix._id !== mixId));
   };
 
+  const handleMusicVolumeChange = (volume) => {
+    setMusicVolume(parseInt(volume));
+  };
+
+
   // ----------------------------------------------------------------------------
 
 
@@ -119,6 +124,10 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
     });
   }, [isMuted, ambienceVolumes]);
 
+  useEffect(() => {
+    musicAudioRef.current.volume = musicVolume / 100;
+  }, [musicVolume]); 
+
   // -------------------------------------------------------------------------
 
 
@@ -140,6 +149,8 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
           currentTrack={currentTrack}
           isPlaying={isPlaying}
           onTrackSelect={handleTrackSelect}
+          musicVolume={musicVolume}
+          onMusicVolumeChange={handleMusicVolumeChange}
         />
          <AmbienceMixer 
           sounds={ambienceSounds} 

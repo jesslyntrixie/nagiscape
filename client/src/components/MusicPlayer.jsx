@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect }) {
+function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolume, onMusicVolumeChange }) {
   // Komponen ini tidak butuh state sendiri, karena semua dikontrol oleh parent.
 
   return (
@@ -11,7 +11,19 @@ function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect }) {
         <h2 className="panel-title">Music Tracks</h2>
       </div>
       
-      {/* Anda bisa menambahkan slider volume utama di sini jika mau */}
+     {/* 2. Tambahkan elemen slider volume utama */}
+      <div className="volume-control">
+        <i className="ri-volume-up-line volume-icon"></i>
+        <input 
+          type="range" 
+          min="0" 
+          max="100" 
+         
+          value={musicVolume} 
+          onChange={(e) => onMusicVolumeChange(e.target.value)}
+          className="slider"
+        />
+      </div>
 
       <div className="track-list">
         {tracks.map(track => {
