@@ -55,7 +55,8 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
     if (!ambienceAudioRefs.current[soundId]) {
       const soundData = ambienceSounds.find(s => s._id === soundId);
       if (soundData) {
-        const audio = new Audio(soundData.url);
+        const fullSoundUrl = `${apiUrl}${soundData.url}`;
+        const audio = new Audio(fullSoundUrl);
         audio.loop = true;
         ambienceAudioRefs.current[soundId] = audio;
       }
