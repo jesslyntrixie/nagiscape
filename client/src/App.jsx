@@ -14,12 +14,12 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
 
-function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
+function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, onAuthSuccess, onLogout }) {
 
   // States --------------------------------------------------------------
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -140,6 +140,7 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
       <Header
         user={user}
         onLoginClick={() => setAuthModalOpen(true)}
+        onLogout={onLogout}
         myMixes={myMixes}
         onLoadMix={loadMixSettings}
         onDeleteMix={deleteMix}
@@ -169,6 +170,10 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes }) {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setAuthModalOpen(false)}
+        onAuthSuccess={(userData) => {
+            onAuthSuccess(userData);
+            setAuthModalOpen(false);
+        }}
       />
       <SaveMixModal
         isOpen={isSaveMixModalOpen}
@@ -187,7 +192,7 @@ function App() {
       { _id: '2', mixName: 'Hujan Sore Santai', settings: { musicVolume: 60 } },
       { _id: '3', mixName: 'Kerja di Kafe', settings: { musicVolume: 80 } },
   ]);
-
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -207,16 +212,65 @@ function App() {
     fetchData();
   }, []);
 
+
+  
+  const handleAuthSuccess = (userData) => setUser(userData);
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setUser(null);
+    setMyMixes([]);
+  };
+
+  // FUNGSI BARU: Memeriksa sesi login saat aplikasi pertama kali dimuat
+  useEffect(() => {
+    const verifyUserSession = async () => {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        try {
+          // Ganti endpoint '/api/auth/profile' sesuai dengan endpoint backend Anda
+          const response = await fetch(`${apiUrl}/api/auth/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          const data = await response.json();
+          if (response.ok) {
+            setUser(data.user); // Atur state user jika token valid
+          } else {
+            localStorage.removeItem('authToken'); // Hapus token jika tidak valid
+          }
+        } catch (error) {
+          console.error("Session verification failed:", error);
+          localStorage.removeItem('authToken');
+        }
+      }
+    };
+    verifyUserSession();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tracksResponse = await fetch(`${apiUrl}/api/track`);
+        const ambienceResponse = await fetch(`${apiUrl}/api/ambience`);
+        const tracksData = await tracksResponse.json();
+        const ambienceData = await ambienceResponse.json();
+        setMusicTracks(tracksData);
+        setAmbienceSounds(ambienceData);
+      } catch (error) {
+        console.error("Gagal mengambil data dari server:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
           element={<MainLayout
-            musicTracks={musicTracks}
-            ambienceSounds={ambienceSounds}
-            myMixes={myMixes}
-            setMyMixes={setMyMixes} // Kirim juga fungsi set-nya jika dibutuhkan di child
+            musicTracks={musicTracks} ambienceSounds={ambienceSounds}
+            myMixes={myMixes} setMyMixes={setMyMixes}
+            user={user} onAuthSuccess={handleAuthSuccess} onLogout={handleLogout}
           />}
         />
         <Route path="/settings" element={<SettingsPage />} />
