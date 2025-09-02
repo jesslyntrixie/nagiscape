@@ -272,7 +272,14 @@ exports.loginUser = async (req, res) => {
         );
 
         // 8. Kirim token tersebut sebagai respons sukses
-        res.status(200).json({token});
+        res.status(200).json({
+            token,
+            user: {
+                _id: user._id,
+                email: user.email
+                // Tambahkan field lain jika ada dan dibutuhkan
+            }
+        });
 
     } catch (error){
         // 9. Tangkap jika ada error server
