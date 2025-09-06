@@ -1,6 +1,8 @@
 // /src/components/SettingsPage.jsx
 import { React, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
+import ForgotPasswordModal from './ForgotPasswordModal';
+
 
 function SettingsPage( {onLogout} ) {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ function SettingsPage( {onLogout} ) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isForgotModalOpen, setForgotModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,11 +122,13 @@ function SettingsPage( {onLogout} ) {
             />
             <div className="form-actions">
               <button type="submit" className="action-btn">Update Password</button>
-              <a href="#" className="link-btn">Forgot password?</a>
+              <button onClick= {() => setForgotModalOpen(true)}className="link-btn">Forgot password?</button>
             </div>
             {error && <p className="form-message error">{error}</p>}
             {successMessage && <p className="form-message success">{successMessage}</p>}
           </form>
+          <ForgotPasswordModal isOpen={isForgotModalOpen} onClose={() => setForgotModalOpen(false)} />
+
         </div>
 
         {/* Danger Zone Section */}

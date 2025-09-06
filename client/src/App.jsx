@@ -8,6 +8,7 @@ import AuthModal from './components/AuthModal.jsx';
 import SaveMixModal from './components/SaveMixModal.jsx';
 import SettingsPage from './components/SettingsPage';
 import CreditsPage from './components/CreditsPage.jsx';
+import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
@@ -413,6 +414,7 @@ function App() {
           path="/credits"
           element={<CreditsPage musicTracks={musicTracks} ambienceSounds={ambienceSounds} />}
         />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -296,5 +296,90 @@ exports.getUserProfile = async (req, res) => {
     res.status(200).json({ user: req.user });
 };
 
+// /server/controllers/authController.js
+// ... (import dan fungsi lain yang sudah ada)
+
+// @desc    Forgot password
+// @route   POST /api/auth/forgot-password
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        // Penting: Selalu kirim respons sukses meskipun email tidak ditemukan
+        // Ini mencegah orang lain menebak-nebak email yang terdaftar.
+        if (!user) {
+            return res.status(200).json({ message: 'If a user with that email exists, a password reset link has been sent.' });
+        }
+
+        // 1. Buat token mentah (raw token)
+        const resetToken = crypto.randomBytes(32).toString('hex');
+
+        // 2. Hash token tersebut sebelum disimpan ke database untuk keamanan
+        user.passwordResetToken = crypto
+            .createHash('sha256')
+            .update(resetToken)
+            .digest('hex');
+        
+        // 3. Atur waktu kedaluwarsa (misal: 10 menit)
+        user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+        await user.save();
+
+        // 4. Kirim email dengan token yang MENTAH (bukan yang di-hash)
+        const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+        const message = `You are receiving this email because you (or someone else) have requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`; // Ganti dengan template HTML yang bagus jika perlu
+        
+        await sendEmail({
+            to: user.email,
+            subject: 'Nagiscape Password Reset Request',
+            html: `<p>Please click the following link to reset your password: <a href="${resetUrl}">Reset Password</a>. This link is valid for 10 minutes.</p>`
+        });
+
+        res.status(200).json({ message: 'If a user with that email exists, a password reset link has been sent.' });
+    } catch (error) {
+        // Hapus token jika terjadi error agar user bisa mencoba lagi
+        if (req.user) {
+            req.user.passwordResetToken = undefined;
+            req.user.passwordResetExpires = undefined;
+            await req.user.save();
+        }
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+// @desc    Reset password
+// @route   PUT /api/auth/reset-password/:token
+exports.resetPassword = async (req, res) => {
+    try {
+        // 1. Hash token yang datang dari URL
+        const hashedToken = crypto
+            .createHash('sha256')
+            .update(req.params.token)
+            .digest('hex');
+
+        // 2. Cari user dengan token yang cocok DAN belum kedaluwarsa
+        const user = await User.findOne({ 
+            passwordResetToken: hashedToken,
+            passwordResetExpires: { $gt: Date.now() } 
+        });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Token is invalid or has expired' });
+        }
+
+        // 3. Jika user ditemukan, update password dan hapus token
+        user.password = req.body.password;
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save();
+
+        res.status(200).json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 
 // jwt itu kayak kalau udh login, ga perlu login lagi kalau mau akses api tertentu. ada masa berlaku, misal 1 jam: kalau udh lewat 1 jam maka session expired, harus login lagi.
