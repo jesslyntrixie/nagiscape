@@ -1,8 +1,10 @@
 // /src/components/SettingsPage.jsx
 import { React, useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 
-function SettingsPage() {
+function SettingsPage( {onLogout} ) {
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -39,15 +41,49 @@ function SettingsPage() {
         setSuccessMessage(data.message || "Password updated successfully!")
         setCurrentPassword('');
         setNewPassword('');
+        setConfirmPassword('');
         setTimeout(()=>setSuccessMessage(''), 4000);
       } else {
         throw new Error(data.message || 'Failed to update password');
       }
     } catch (error) {
       setError(error.message);
-      console.error("Error changing password: ", err);
+      console.error("Error changing password: ", error);
     }
 
+  };
+  
+  const handleDelete = async () => {
+    if (!window.confirm("Are you absolutely sure? This action cannot be undone.")) {
+      return; 
+    }
+
+    try {
+      const token = localStorage.getItem('authToken'); 
+
+      if (!token) {
+        setError("You must be logged in to perform this action.");
+        return;
+      }
+
+      const response = await fetch(`/api/users/me`, { 
+        method: 'DELETE', 
+        headers : {
+          'Authorization': `Bearer ${token}` 
+        }
+      });
+      if (response.ok) {
+        alert("Account deleted successfully.");  
+        onLogout(); 
+        navigate('/'); 
+      } else {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to delete account.');
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error("Error deleting account:", err);
+    }
   };
 
   return (
@@ -94,7 +130,7 @@ function SettingsPage() {
         <div className="settings-section danger-zone">
           <h3>DANGER ZONE</h3>
           <p>Once you delete your account, there is no going back. Please be certain.</p>
-          <button className="action-btn delete-btn">Delete Account</button>
+          <button className="action-btn delete-btn" onClick={handleDelete}>Delete Account</button>
         </div>
 
         {/* App Preferences Section */}

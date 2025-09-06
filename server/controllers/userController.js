@@ -26,5 +26,21 @@ exports.changePassword = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
     }
+};
+
+// @desc Delete user account
+// @route DELETE /api/users/me
+// @access Private
+
+exports.deleteAccount = async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.id);
+        res.status(200) .json({message: 'Account deleted successfully'});
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error'});
+
+    }
 
 };

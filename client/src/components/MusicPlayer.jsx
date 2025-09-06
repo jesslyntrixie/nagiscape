@@ -41,7 +41,7 @@ function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolu
                 <div className="track-artist">{track.artistName}</div>
               </div>
               <div className="track-controls">
-\                {isActive && isPlaying ? (
+                {isActive && isPlaying ? (
                   <i className="ri-pause-mini-fill"></i>
                 ) : (
                   <i className="ri-play-mini-fill"></i>

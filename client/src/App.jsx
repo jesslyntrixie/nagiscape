@@ -408,7 +408,7 @@ function App() {
             user={user} onAuthSuccess={handleAuthSuccess} onLogout={handleLogout}
           />}
         />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings" element={<SettingsPage onLogout={handleLogout}/>} />
         <Route
           path="/credits"
           element={<CreditsPage musicTracks={musicTracks} ambienceSounds={ambienceSounds} />}
