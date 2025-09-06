@@ -7,7 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const mixRoutes = require('./routes/mixRoutes');
 const ambienceRoutes = require('./routes/ambienceRoutes'); 
 const trackRoutes = require('./routes/trackRoutes'); 
-
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -30,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/mixes', mixRoutes);
 app.use('/api/ambience', ambienceRoutes);
 app.use('/api/track', trackRoutes);
+app.use('/api/users', userRoutes); 
 
 // Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI, {

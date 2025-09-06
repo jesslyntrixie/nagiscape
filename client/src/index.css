@@ -1016,6 +1016,31 @@ input:checked + .toggle-slider { background-color: #f7e6b9; }
 input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: translateX(22px); }
 
 
+/* /src/index.css */
+
+/* Untuk pesan error (misal: password tidak cocok) */
+.form-message.error {
+  background-color: rgba(255, 77, 77, 0.15);
+  border: 1px solid rgba(255, 77, 77, 0.4);
+  color: #ffc2c2; /* Warna teks error yang lebih lembut */
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* Untuk pesan sukses (misal: password berhasil diubah) */
+.form-message.success {
+  background-color: rgba(77, 255, 158, 0.15);
+  border: 1px solid rgba(77, 255, 158, 0.4);
+  color: #b3ffda; /* Warna teks sukses */
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 15px;
+  text-align: center;
+}
 
 
 /* CREDITS PAGE */
