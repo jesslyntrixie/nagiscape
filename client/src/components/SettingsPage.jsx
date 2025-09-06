@@ -36,7 +36,7 @@ function SettingsPage() {
         </div>
 
         {/* App Preferences Section */}
-        <div className="settings-section">
+        {/* <div className="settings-section">
           <h3>App Preferences</h3>
           <div className="preference-item">
             <span>Light Mode</span>
@@ -45,7 +45,7 @@ function SettingsPage() {
               <span className="toggle-slider"></span>
             </label>
           </div>
-        </div>
+        </div> */}
         
         {/* About Section */}
         <div className="settings-section">

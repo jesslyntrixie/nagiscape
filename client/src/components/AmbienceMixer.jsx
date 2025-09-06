@@ -1,40 +1,20 @@
 // /src/components/AmbienceMixer.jsx
 
-import React, { useState } from 'react';
+import React from 'react';
 
-// 1. Komponen sekarang menerima props `sounds`.
-//    Kita beri nilai default array kosong `[]` agar tidak error jika props tidak dikirim.
-function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange }) {
-
-    // // (Opsional, tapi sangat direkomendasikan) State untuk mengelola volume setiap suara
-    // const [volumes, setVolumes] = useState(() => {
-    //     const initialVolumes = {};
-    //     sounds.forEach(sound => {
-    //         initialVolumes[sound.id] = sound.initialVolume;
-    //     });
-    //     return initialVolumes;
-    // });
-
-    // const handleVolumeChange = (soundId, newVolume) => {
-    //     setVolumes(prevVolumes => ({
-    //         ...prevVolumes,
-    //         [soundId]: parseInt(newVolume, 10) // pastikan nilainya integer
-    //     }));
-    // };
-
+// Tambahkan 'disabled' sebagai prop
+function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange, disabled }) {
     return(
-        <div className="panel right-panel">
+        // Tambahkan class 'disabled' jika prop disabled bernilai true
+        <div className={`panel right-panel ${disabled ? 'disabled' : ''}`}>
             <div className="panel-header">
                 <h2 className="panel-title">Ambience Mixer</h2>
             </div>
             
             <div className="ambience-list">
-                {/* 2. Gunakan .map() untuk iterasi setiap item di dalam array 'sounds' */}
                 {sounds.map((sound) => (
-                    // 3. 'key' adalah properti wajib dan harus unik untuk setiap item dalam list
                     <div className="ambience-item" key={sound._id}>
                         <div className="ambience-header">
-                            {/* Gunakan data dinamis dari objek 'sound' */}
                             <div className="ambience-icon"><i className={sound.iconClass}></i></div>
                             <div className="ambience-name">{sound.name}</div>
                         </div>
@@ -42,11 +22,11 @@ function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange }) {
                             type="range" 
                             min="0" 
                             max="100" 
-                            // Value slider sekarang dikontrol oleh state dari parent
                             value={volumes[sound._id] || 0} 
-                            // Panggil fungsi dari parent setiap kali slider berubah
                             onChange={(e) => onVolumeChange(sound._id, e.target.value)}
                             className="slider ambience-slider"
+                            // Tambahkan properti disabled
+                            disabled={disabled}
                         />
                     </div>
                 ))}

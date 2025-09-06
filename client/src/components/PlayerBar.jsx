@@ -1,8 +1,6 @@
-import SaveMixModal from "./SaveMixModal";
+// /src/components/PlayerBar.jsx
 
-function PlayerBar({ onSaveMixClick }){
-    // onSaveMixClick itu props, dioper dari induk: App.jsx.
-
+function PlayerBar({ currentTrack, isAppPlaying, isMusicPlaying, onSaveMixClick, onPlayPauseClick, currentMixName }){
     return(
         <div className="player-bar">
             <div className="now-playing">
@@ -11,13 +9,15 @@ function PlayerBar({ onSaveMixClick }){
                 </div>
                 <div className="now-playing-info">
                     <div className="now-playing-label">Now Playing</div>
-                    <div className="now-playing-name">Rainy Day Study Mix</div>
+                    <div className="now-playing-name">
+                        {currentMixName ? currentMixName : (currentTrack ? currentTrack.displayName : 'Select a track')}
+                    </div>
                 </div>
             </div>
             
             <div className="player-controls">
-                <div className="play-pause-btn">
-                    <i className="ri-pause-fill"></i>
+                <div className="play-pause-btn" onClick={onPlayPauseClick}>
+                    {isAppPlaying ? <i className="ri-pause-fill"></i> : <i className="ri-play-fill"></i>}
                 </div>
             </div>
             <div className="save-btn-container"> 
@@ -31,4 +31,3 @@ function PlayerBar({ onSaveMixClick }){
 }
 
 export default PlayerBar;
-

@@ -288,5 +288,13 @@ exports.loginUser = async (req, res) => {
     }
 }
 
+// @desc Get user profile
+// Middleware 'protect' akan berjalan lebih dulu. Jika token valid,
+// data user akan tersedia di 'req.user'.
+exports.getUserProfile = async (req, res) => {
+    // Cukup kirim kembali data user yang sudah ditemukan oleh middleware
+    res.status(200).json({ user: req.user });
+};
+
 
 // jwt itu kayak kalau udh login, ga perlu login lagi kalau mau akses api tertentu. ada masa berlaku, misal 1 jam: kalau udh lewat 1 jam maka session expired, harus login lagi.

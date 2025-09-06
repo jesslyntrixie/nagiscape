@@ -12,7 +12,8 @@ function SaveMixModal({ isOpen, onClose, onSave }) {
   const handleSave = (e) => {
     e.preventDefault();
     if (mixName.trim()) {
-      onSave(mixName); // Kirim nama mix ke parent
+      onSave(mixName); 
+      setMixName('')
       onClose();
     } else {
       alert('Nama mix tidak boleh kosong!');
@@ -34,7 +35,7 @@ function SaveMixModal({ isOpen, onClose, onSave }) {
             required 
             autoFocus
           />
-          <button type="submit" className="modal-action-btn">Save Mix</button>
+          <button type="submit" className="modal-action-btn" >Save Mix</button>
         </form>
       </div>
     </div>

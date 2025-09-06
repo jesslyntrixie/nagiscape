@@ -2,7 +2,6 @@
 
 import React from 'react';
 
-// Komponen kecil untuk satu item mix
 function MixItem({ mix, onLoad, onDelete }) {
   return (
     <div className="mix-item">
@@ -18,7 +17,7 @@ function MixItem({ mix, onLoad, onDelete }) {
     </div>);
 }
 
-// Komponen utama modal
+
 function MyMixesModal({ isOpen, onClose, mixes, onLoadMix, onDeleteMix }) {
   if (!isOpen) {
     return null;

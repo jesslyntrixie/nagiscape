@@ -2,26 +2,24 @@
 
 import React from 'react';
 
-function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolume, onMusicVolumeChange }) {
-  // Komponen ini tidak butuh state sendiri, karena semua dikontrol oleh parent.
+function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolume, onMusicVolumeChange, disabled }) {
 
   return (
-    <div className="panel left-panel">
+    <div className={`panel left-panel ${disabled ? 'disabled' : ''}`}>
       <div className="panel-header">
         <h2 className="panel-title">Music Tracks</h2>
       </div>
       
-     {/* 2. Tambahkan elemen slider volume utama */}
       <div className="volume-control">
         <i className="ri-volume-up-line volume-icon"></i>
         <input 
           type="range" 
           min="0" 
           max="100" 
-         
           value={musicVolume} 
           onChange={(e) => onMusicVolumeChange(e.target.value)}
           className="slider"
+          disabled={disabled}
         />
       </div>
 
@@ -30,13 +28,11 @@ function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolu
           const isActive = currentTrack?._id === track._id;
 
           return (
-            <div
-              // Menambahkan class 'active' jika lagu sedang dipilih
-              className={`track-item ${isActive ? 'active' : ''}`}
-              key={track._id}
-              // Memanggil fungsi dari parent saat item di-klik
-              onClick={() => onTrackSelect(track)}
-            >
+              <div
+                className={`track-item ${isActive ? 'active' : ''}`}
+                key={track._id}
+                onClick={() => onTrackSelect(track)}
+              >
               <div className="track-thumbnail">
                 <i className="ri-music-2-line"></i>
               </div>
@@ -45,8 +41,7 @@ function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolu
                 <div className="track-artist">{track.artistName}</div>
               </div>
               <div className="track-controls">
-                {/* Mengubah ikon berdasarkan status isPlaying dan lagu yang aktif */}
-                {isActive && isPlaying ? (
+\                {isActive && isPlaying ? (
                   <i className="ri-pause-mini-fill"></i>
                 ) : (
                   <i className="ri-play-mini-fill"></i>

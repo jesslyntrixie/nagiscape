@@ -7,7 +7,7 @@ function MixItem({ mix, onLoad, onDelete }) {
     <div className="mix-item-dropdown">
       <span className="mix-item-name">{mix.mixName}</span>
       <div className="mix-item-controls">
-        <div className="mix-icon-btn load-icon" title="Load Mix" onClick={() => onLoad(mix.settings)}>
+        <div className="mix-icon-btn load-icon" title="Load Mix" onClick={() => onLoad(mix.settings, mix.mixName)}>
           <i className="ri-play-fill"></i>
         </div>
         <div className="mix-icon-btn delete-icon" title="Delete Mix" onClick={() => onDelete(mix._id)}>
@@ -35,7 +35,7 @@ function MixesDropdown({ mixes, onLoadMix, onDeleteMix }) {
             />
           ))
         ) : (
-          <p className="empty-list-text">Belum ada mix yang disimpan.</p>
+          <p className="empty-list-text">You don't have any saved mixes yet.</p>
         )}
       </div>
     </div>

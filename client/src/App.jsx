@@ -19,12 +19,12 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
   // States --------------------------------------------------------------
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
   const [isSaveMixModalOpen, setSaveMixModalOpen] = useState(false);
-  // const [user, setUser] = useState(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isAppPlaying, setIsAppPlaying] = useState(true);
   const [currentTrack, setCurrentTrack] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [musicVolume, setMusicVolume] = useState(70);
   const [ambienceVolumes, setAmbienceVolumes] = useState({});
+  const [currentMixName, setCurrentMixName] = useState('');
   // ---------------------------------------------------------------------
 
 
@@ -33,20 +33,26 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
 
 
   // functions -----------------------------------------------------------
-  const toggleMute = () => {
-    setIsMuted(prev => !prev);
+
+  const toggleGlobalPlayPause = () => {
+    setIsAppPlaying(prev => !prev);
   };
 
-  const handleTrackSelect = (track) => {
+const handleTrackSelect = (track) => {
+    setCurrentMixName('');
     const fullTrackUrl = `${apiUrl}${track.url}`;
-    if (currentTrack && currentTrack._id === track._id && isPlaying) {
-      setIsPlaying(false);
+    
+    const isSameTrack = currentTrack?._id === track._id;
+
+    if (isSameTrack && isMusicPlaying) {
+      setIsMusicPlaying(false); 
     } else {
       setCurrentTrack(track);
       if (musicAudioRef.current.src !== fullTrackUrl) {
         musicAudioRef.current.src = fullTrackUrl;
       }
-      setIsPlaying(true);
+      setIsMusicPlaying(true); 
+      setIsAppPlaying(true);   
     }
   };
 
@@ -63,30 +69,98 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
     }
   };
 
-    const handleSaveMixClick = () => {
-    const userIsLoggedIn = true; // Ganti dengan logika user sungguhan nanti
+  const handleSaveMixClick = () => user ? setSaveMixModalOpen(true) : setAuthModalOpen(true);
 
-    if (userIsLoggedIn) {
-      setSaveMixModalOpen(true);
-    } else {
-      setAuthModalOpen(true);
+  const saveMixToServer = async (mixName) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return console.error("No auth token found.");
+
+    const settings = {
+      musicTrackId: currentTrack ? currentTrack._id : null,
+      musicVolume, 
+      ambienceVolumes
+    };
+
+    try {
+      const response = await fetch(`${apiUrl}/api/mixes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({mixName, settings})
+      });
+      const newMix = await response.json();
+      if (response.ok){
+        setMyMixes(prevMixes => [...prevMixes, newMix]);
+      } else {
+        throw new Error(newMix.message || 'Failed to save mix');
+      }
+    } catch (error) {
+      console.error("Error saving mix: ", error);
     }
   };
 
-  const saveMixToServer = (mixName) => {
-    console.log(`Menyimpan mix dengan nama: "${mixName}"`);
-    // TODO: LOGIKA SAVE KE BACKEND
-  };
 
-  const loadMixSettings = (settings) => {
-    console.log('Memuat settings:', settings);
-    setMyMixesModalOpen(false);
-  };
 
-  const deleteMix = (mixId) => {
-    console.log('--- LOGIKA DELETE MIX API DISINI ---', mixId);
-    // Setelah berhasil hapus di server, update state di frontend
-    setMyMixes(myMixes.filter(mix => mix._id !== mixId));
+
+const loadMixSettings = (settings, mixName) => {
+    if (!settings) {
+      console.error("Attempted to load mix with invalid settings.");
+      return;
+    }
+    // 1. Buat objek dasar di mana SEMUA volume ambience diatur ke 0.
+    const resetAmbienceVolumes = {};
+    ambienceSounds.forEach(sound => {
+      resetAmbienceVolumes[sound._id] = 0;
+    });
+
+    // 2. Gabungkan objek reset dengan settings dari mix baru.
+    // Ini memaksa suara dari mix lama yang tidak ada di mix baru untuk memiliki volume 0.
+    const newAmbienceVolumes = { ...resetAmbienceVolumes, ...(settings.ambienceVolumes || {}) };
+    
+    setAmbienceVolumes(newAmbienceVolumes);
+
+    setCurrentMixName(mixName || 'Loaded Mix');
+    setMusicVolume(settings.musicVolume || 70);
+
+    const hasMusic = !!settings.musicTrackId;
+    setIsMusicPlaying(hasMusic);
+
+    if (hasMusic) {
+        const trackToLoad = musicTracks.find(t => t._id === settings.musicTrackId);
+        if (trackToLoad) {
+          setCurrentTrack(trackToLoad);
+        } else {
+          setCurrentTrack(null);
+          setIsMusicPlaying(false);
+        }
+    } else {
+        setCurrentTrack(null);
+    }
+    
+    const hasAmbience = Object.values(newAmbienceVolumes).some(v => v > 0);
+    setIsAppPlaying(hasMusic || hasAmbience);
+};
+
+const deleteMix = async (mixId) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) return console.error("No auth token found.");
+    if (!window.confirm("Are you sure?")) return;
+    try {
+        const response = await fetch(`${apiUrl}/api/mixes/${mixId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if(response.ok) {
+            setMyMixes(prevMixes => prevMixes.filter(mix => mix._id !== mixId));
+        } else {
+            const data = await response.json();
+            throw new Error(data.message || 'Failed to delete mix.');
+        }
+    } catch (error) {
+        console.error("Error deleting mix:", error);
+    }
   };
 
   const handleMusicVolumeChange = (volume) => {
@@ -99,40 +173,91 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
 
   // useeffects/ listeners ------------------------------------------------------
 
-  useEffect(() => {
-    if (isPlaying && currentTrack) {
-      musicAudioRef.current.play();
-    } else {
-      musicAudioRef.current.pause();
+
+useEffect(() => {
+  const audio = musicAudioRef.current;
+  const shouldPlayMusic = isAppPlaying && isMusicPlaying && currentTrack;
+
+  if (shouldPlayMusic) {
+    const fullTrackUrl = `${apiUrl}${currentTrack.url}`;
+    
+    // If the audio source is not the correct one, update it.
+    if (audio.src !== fullTrackUrl) {
+      audio.src = fullTrackUrl;
     }
-  }, [isPlaying, currentTrack]);
+    
+    // Attempt to play the audio.
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.error("Audio playback failed:", error);
+      });
+    }
+  } else {
+    // If conditions to play are not met, pause the audio.
+    audio.pause();
+    
+    // If no track is selected, clear the audio source to free up memory.
+    if (!currentTrack && audio.src) {
+        audio.src = '';
+        audio.removeAttribute('src');
+    }
+  }
+}, [currentTrack, isAppPlaying, isMusicPlaying]); 
 
-  useEffect(() => {
-    musicAudioRef.current.muted = isMuted;
-  }, [isMuted]);
 
-  useEffect(() => {
-    Object.keys(ambienceAudioRefs.current).forEach(soundId => {
-      const audio = ambienceAudioRefs.current[soundId];
-      const volume = ambienceVolumes[soundId] || 0;
-      audio.muted = isMuted;
+
+useEffect(() => {
+  Object.entries(ambienceVolumes).forEach(([soundId, volume]) => {
+    let audio = ambienceAudioRefs.current[soundId];
+
+    if (!audio && volume > 0) {
+      const soundData = ambienceSounds.find(s => s._id === soundId);
+      if (soundData) {
+        const fullSoundUrl = `${apiUrl}${soundData.url}`;
+        const newAudio = new Audio(fullSoundUrl);
+        newAudio.loop = true;
+        ambienceAudioRefs.current[soundId] = newAudio;
+        audio = newAudio;
+      }
+    }
+
+    if (audio) {
       audio.volume = volume / 100;
-      if (volume > 0 && audio.paused) {
-        audio.play();
-      } else if (volume === 0) {
+
+      if (isAppPlaying && volume > 0) {
+        audio.play().catch(error => console.error(`Failed to play ambience ${soundId}:`, error));
+      } else {
         audio.pause();
       }
-    });
-  }, [isMuted, ambienceVolumes]);
+    }
+  });
 
-  useEffect(() => {
+  // Cleanup function sebagai jaring pengaman terakhir
+  return () => {
+    if (!isAppPlaying) {
+      Object.values(ambienceAudioRefs.current).forEach(audio => {
+        if (audio) {
+          audio.pause();
+        }
+      });
+    }
+  };
+}, [isAppPlaying, ambienceVolumes, ambienceSounds, apiUrl]);
+
+
+const isDisabled = !isAppPlaying;
+
+useEffect(() => {
     musicAudioRef.current.volume = musicVolume / 100;
   }, [musicVolume]); 
 
+useEffect(() => {
+    musicAudioRef.current.loop = true;
+  }, []);
+
+
   // -------------------------------------------------------------------------
-
-
-
 
 
   return (
@@ -149,23 +274,26 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
         <MusicPlayer 
           tracks={musicTracks} 
           currentTrack={currentTrack}
-          isPlaying={isPlaying}
+          isPlaying={isMusicPlaying && isAppPlaying}
           onTrackSelect={handleTrackSelect}
           musicVolume={musicVolume}
           onMusicVolumeChange={handleMusicVolumeChange}
+          disabled={isDisabled}
         />
          <AmbienceMixer 
           sounds={ambienceSounds} 
           volumes={ambienceVolumes}
           onVolumeChange={handleAmbienceVolumeChange}
+          disabled={isDisabled}
         />
       </main>
       <PlayerBar 
-        isMuted={isMuted}
-        onMuteClick={toggleMute}
-        currentTrack={currentTrack}
-        isPlaying={isPlaying}
+        currentTrack={currentTrack} 
+        isMusicPlaying={isMusicPlaying}
+        isAppPlaying={isAppPlaying}
         onSaveMixClick={handleSaveMixClick} 
+        onPlayPauseClick={toggleGlobalPlayPause}
+        currentMixName={currentMixName}
       />
       <AuthModal
         isOpen={isAuthModalOpen}
@@ -221,7 +349,6 @@ function App() {
     setMyMixes([]);
   };
 
-  // FUNGSI BARU: Memeriksa sesi login saat aplikasi pertama kali dimuat
   useEffect(() => {
     const verifyUserSession = async () => {
       const token = localStorage.getItem('authToken');
@@ -246,21 +373,29 @@ function App() {
     verifyUserSession();
   }, []);
 
+
+
+  // fungsi untuk load mixes data dari user setelah login. 
+  // memiliki dependensi user, artinya akan dijalankan tiap nilau user berubah (kalau login kan null -> not null atau logout kan sebaliknya, tp di logout udh ada kode utk clear mymixes)
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tracksResponse = await fetch(`${apiUrl}/api/track`);
-        const ambienceResponse = await fetch(`${apiUrl}/api/ambience`);
-        const tracksData = await tracksResponse.json();
-        const ambienceData = await ambienceResponse.json();
-        setMusicTracks(tracksData);
-        setAmbienceSounds(ambienceData);
-      } catch (error) {
-        console.error("Gagal mengambil data dari server:", error);
-      }
+    const fetchUserMixes = async () => {
+        if (user) {
+            const token = localStorage.getItem('authToken');
+            try {
+                const response = await fetch(`${apiUrl}/api/mixes`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if(response.ok) setMyMixes(data);
+                else console.error("Failed to fetch mixes:", data.message);
+            } catch (error) {
+                console.error("Error fetching mixes:", error);
+            }
+        }
     };
-    fetchData();
-  }, []);
+    fetchUserMixes();
+  }, [user]);
+
 
   return (
     <BrowserRouter>
