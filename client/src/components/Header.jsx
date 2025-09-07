@@ -82,7 +82,7 @@ function Header({ user, onLoginClick, onLogout, myMixes, onLoadMix, onDeleteMix 
   };
 
   return (
-    <header>
+    <header className='panelmain'>
       <div className="logo">nagiscape<span>_</span></div>
       <div className="header-right">
         <div className="my-mixes-container">

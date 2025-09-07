@@ -2,7 +2,7 @@
 
 function PlayerBar({ currentTrack, isAppPlaying, isMusicPlaying, onSaveMixClick, onPlayPauseClick, currentMixName }){
     return(
-        <div className="player-bar">
+        <div className="player-bar panelmain">
             <div className="now-playing">
                 <div className="now-playing-icon">
                     <i className="ri-headphone-line"></i>

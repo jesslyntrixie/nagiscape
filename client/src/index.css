@@ -40,13 +40,79 @@
     box-sizing: border-box;
 }
 
+#background-video {
+  position: fixed; /* Menempel pada viewport */
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100; 
+  overflow: hidden; 
+  object-fit: cover; 
+  filter: brightness(60%) contrast(120%); 
+}
+
+.panelmain {
+  background-color: rgba(50, 48, 70, 0.1); /* Sedikit lebih gelap dari sebelumnya */
+  backdrop-filter: blur(1px); /* Tetap gunakan blur */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #f7e6b9; /* Contoh warna yang bagus dengan background gelap */
+}
+
+a {
+  color: #a7d9ff; /* Contoh warna link */
+}
+
 body {
     font-family: 'MiSans', sans-serif;
-    background-color: #2c2a3e;
+    /* background-color: #2c2a3e; */
     color: #f5f0e9;
     width: 100%;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #e0e0e0;
+  /* overflow: hidden; */
+    background-color: transparent; 
+    background-image: none;
 }
+
+
+body::after {
+  content: '';
+  position: fixed; /* Menempel di seluruh layar */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* Terapkan filter SVG yang kita buat */
+  filter: url(#noiseFilter);
+
+  /* Atur seberapa kuat efek grain-nya */
+  opacity: 0.1; 
+
+  /* Pastikan overlay tidak bisa di-klik */
+  pointer-events: none; 
+
+  /* Atur posisi layer di antara background video dan konten */
+  z-index: 999;
+}
+
+/* #root {
+  position: relative; 
+  z-index: 1; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;  */
 
 .container {
     width: 100%;
@@ -66,6 +132,8 @@ header {
     height: 80px;
     background-color: rgba(44, 42, 62, 0.95);
     border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+    position: relative; 
+    z-index: 20; 
 }
 
 .logo {
@@ -119,13 +187,15 @@ header {
     flex: 1;
     padding: 30px 40px;
     gap: 30px;
-    overflow: hidden; /* Prevent content overflow */
+    overflow: hidden; 
+    position: relative; 
+    z-index: 10;
 }
 
 /* Panel Styles - Glassmorphism */
 .panel {
     background-color: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(6px);
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -313,7 +383,7 @@ header {
 /* Footer Player Bar Styles */
 .player-bar {
     height: 90px;
-    background-color: rgba(44, 42, 62, 0.95);
+    /* background-color: rgba(44, 42, 62, 0.95); */
     border-top: 1px solid rgba(212, 195, 160, 0.2);
     display: flex;
     align-items: center;
@@ -780,12 +850,13 @@ header {
   top: 120%; /* Posisi sedikit di bawah tombol */
   right: 0;
   width: 300px;
-  background-color: #2c2c3e; /* Warna panel */
-  border-radius: 8px;
-  border: 1px solid #4a4a6a;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  overflow: hidden; /* agar border-radius terlihat di semua sudut */
+  background-color: rgba(44, 42, 62, 0.8); 
+  backdrop-filter: blur(10px);
+  border-radius: 12px; 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  animation: fadeIn 0.2s ease-out; 
 }
 
 .mixes-dropdown-header {
@@ -829,18 +900,16 @@ header {
 
 .profile-dropdown-container {
   position: absolute;
-  top: 120%; /* Posisi sedikit di bawah ikon */
+  top: 120%; 
   right: 0;
-  width: 240px; /* Sedikit lebih lebar */
-  /* Menggunakan style panel utama (glassmorphism) */
-  background-color: rgba(44, 42, 62, 0.8); /* Background lebih solid */
+  width: 240px; 
+  background-color: rgba(44, 42, 62, 0.8); 
   backdrop-filter: blur(10px);
-  border-radius: 12px; /* Border radius lebih besar */
+  border-radius: 12px; 
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  z-index: 100;
   padding: 8px;
-  animation: fadeIn 0.2s ease-out; /* Animasi halus */
+  animation: fadeIn 0.2s ease-out; 
 }
 
 .dropdown-item {
