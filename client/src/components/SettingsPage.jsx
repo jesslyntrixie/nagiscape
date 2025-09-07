@@ -90,79 +90,81 @@ function SettingsPage( {onLogout} ) {
   };
 
   return (
-    <div className="settings-page-container">
-      <header className="settings-header">
-        <Link to="/" className="back-link">&larr; Back to Player</Link>
-        <h2>Settings</h2>
-      </header>
-      
-      <div className="settings-content">
-        {/* Change Password Section */}
-        <div className="settings-section">
-          <h3>Change Password</h3>
-          <form onSubmit={handleSubmit}>
-            <label>Current password</label>
-            <input 
-            type="password" 
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required/>
-            <label>New password</label>
-            <input 
-            type="password" 
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required/>
-            <label>Confirm new password</label>
-            <input 
-            type="password" 
-            value={confirmPassword}
-            onChange={(e) => {setConfirmPassword(e.target.value)}}
-            required
-            />
-            <div className="form-actions">
-              <button type="submit" className="action-btn">Update Password</button>
-              <button onClick= {() => setForgotModalOpen(true)}className="link-btn">Forgot password?</button>
-            </div>
-            {error && <p className="form-message error">{error}</p>}
-            {successMessage && <p className="form-message success">{successMessage}</p>}
-          </form>
-          <ForgotPasswordModal isOpen={isForgotModalOpen} onClose={() => setForgotModalOpen(false)} />
-
-        </div>
-
-        {/* Danger Zone Section */}
-        <div className="settings-section danger-zone">
-          <h3>DANGER ZONE</h3>
-          <p>Once you delete your account, there is no going back. Please be certain.</p>
-          <button className="action-btn delete-btn" onClick={handleDelete}>Delete Account</button>
-        </div>
-
-        {/* App Preferences Section */}
-        {/* <div className="settings-section">
-          <h3>App Preferences</h3>
-          <div className="preference-item">
-            <span>Light Mode</span>
-            <label className="switch">
-              <input type="checkbox" />
-              <span className="toggle-slider"></span>
-            </label>
-          </div>
-        </div> */}
+    <>
+      <div className="settings-page-container">
+        <header className="settings-header">
+          <Link to="/" className="back-link">&larr; Back to Player</Link>
+          <h2>Settings</h2>
+        </header>
         
-        {/* About Section */}
-        <div className="settings-section">
-         <h3>About & Credits</h3>
-          <p>Nagiscape v1.0.0 - A relaxing soundscape experience.</p>
-          <div className="form-actions">
-            {/* Gunakan Link dari React Router */}
-            <Link to="/credits" className="action-btn">
-              View Credits & Attributions
-            </Link>
+        <div className="settings-content">
+          {/* Change Password Section */}
+          <div className="settings-section">
+            <h3>Change Password</h3>
+            <form onSubmit={handleSubmit}>
+              <label>Current password</label>
+              <input 
+              type="password" 
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              required/>
+              <label>New password</label>
+              <input 
+              type="password" 
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required/>
+              <label>Confirm new password</label>
+              <input 
+              type="password" 
+              value={confirmPassword}
+              onChange={(e) => {setConfirmPassword(e.target.value)}}
+              required
+              />
+              <div className="form-actions">
+                <button type="submit" className="action-btn">Update Password</button>
+                <button onClick= {() => setForgotModalOpen(true)}className="link-btn">Forgot password?</button>
+              </div>
+              {error && <p className="form-message error">{error}</p>}
+              {successMessage && <p className="form-message success">{successMessage}</p>}
+            </form>
+
+          </div>
+
+          {/* Danger Zone Section */}
+          <div className="settings-section danger-zone">
+            <h3>DANGER ZONE</h3>
+            <p>Once you delete your account, there is no going back. Please be certain.</p>
+            <button className="action-btn delete-btn" onClick={handleDelete}>Delete Account</button>
+          </div>
+
+          {/* App Preferences Section */}
+          {/* <div className="settings-section">
+            <h3>App Preferences</h3>
+            <div className="preference-item">
+              <span>Light Mode</span>
+              <label className="switch">
+                <input type="checkbox" />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+          </div> */}
+          
+          {/* About Section */}
+          <div className="settings-section">
+          <h3>About & Credits</h3>
+            <p>Nagiscape v1.0.0 - A relaxing soundscape experience.</p>
+            <div className="form-actions">
+              {/* Gunakan Link dari React Router */}
+              <Link to="/credits" className="action-btn">
+                View Credits & Attributions
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <ForgotPasswordModal isOpen={isForgotModalOpen} onClose={() => setForgotModalOpen(false)} />
+    </>
   );
 }
 

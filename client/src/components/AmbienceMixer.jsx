@@ -15,7 +15,7 @@ function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange, disabled }) 
                 {sounds.map((sound) => (
                     <div className="ambience-item" key={sound._id}>
                         <div className="ambience-header">
-                            <div className="ambience-icon"><i className={sound.iconClass}></i></div>
+                            <div className="ambience-icon"><i className={sound.icon}></i></div>
                             <div className="ambience-name">{sound.name}</div>
                         </div>
                         <input 

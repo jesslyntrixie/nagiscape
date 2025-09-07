@@ -1,9 +1,9 @@
 // /src/components/AuthModal.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-function AuthModal({ isOpen, onClose, onAuthSuccess }) {
+function AuthModal({ isOpen, onClose, onAuthSuccess, onForgotPasswordClick }) {
   const [isLoginView, setIsLoginView] = useState(true);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +12,22 @@ function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const [successMessage, setSuccessMessage] = useState(null);
 
 
-  // Jika modal tidak 'isOpen', jangan render apa-apa
+  useEffect(() => {
+    if (!isOpen) {
+      const timer = setTimeout(() => {
+        setIsLoginView(true); // Selalu kembali ke tampilan login
+        setError(null);
+        setEmail('');
+        setPassword('');
+        setSuccessMessage(null);
+      }, 200); 
+
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]); // Dependensi: efek ini hanya berjalan jika 'isOpen' berubah
+
+
   if (!isOpen) {
     return null;
   }
@@ -93,12 +108,17 @@ function AuthModal({ isOpen, onClose, onAuthSuccess }) {
         {isLoginView ? (
           <div>
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} autoComplete="off" >
               <label htmlFor="login-email">Email</label>
               <input type="email" id="login-email" value={email} onChange={(e) => setEmail(e.target.value)} required />
               <label htmlFor="login-password">Password</label>
-              <input type="password" id="login-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              {error && <p className="modal-error">{error}</p>}
+              <input type="password" autoComplete="new-password" id="login-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <div className="modal-extra-links">
+                <span onClick={onForgotPasswordClick} className="forgot-password-trigger">
+                  Forgot Password?
+                </span>
+              </div>
+              {error && <p className="error form-message">{error}</p>}
               <button type="submit" className="modal-action-btn" disabled={isLoading}>
                 {isLoading ? 'Loading...' : 'Login'}
               </button>
@@ -124,12 +144,13 @@ function AuthModal({ isOpen, onClose, onAuthSuccess }) {
             ) : (
               <>
                 <h2>Sign Up</h2>
-                <form onSubmit={handleRegister}>
-                  {/* PERUBAHAN: Input nama sudah dihapus. */}
+                <form onSubmit={handleRegister} autoComplete="off">
                   <label htmlFor="reg-email">Email</label>
                   <input type="email" id="reg-email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   <label htmlFor="reg-password">Password</label>
-                  <input type="password" id="reg-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  <input autoComplete="new-password" type="password" id="reg-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                  
+                  
                   {error && <p className="modal-error">{error}</p>}
                   <button type="submit" className="modal-action-btn" disabled={isLoading}>
                     {isLoading ? 'Loading...' : 'Sign Up'}

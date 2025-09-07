@@ -24,7 +24,7 @@ function CreditsPage({ musicTracks = [], ambienceSounds = [] }) {
           <ul className="credits-list">
             {musicTracks.map(track => (
               <li className="credit-item" key={track._id}>
-                <span className="credit-title">{track.title}</span>
+                <span className="credit-title">{track.displayName}</span>
                 <a href={track.sourceUrl} className="credit-source" target="_blank" rel="noopener noreferrer">
                   Source <i className="ri-external-link-line"></i>
                 </a>

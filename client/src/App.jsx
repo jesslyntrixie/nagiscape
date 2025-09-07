@@ -9,6 +9,7 @@ import SaveMixModal from './components/SaveMixModal.jsx';
 import SettingsPage from './components/SettingsPage';
 import CreditsPage from './components/CreditsPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
+import ForgotPasswordModal from './components/ForgotPasswordModal.jsx';
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 
@@ -26,6 +27,7 @@ function MainLayout({ musicTracks, ambienceSounds, myMixes, setMyMixes, user, on
   const [musicVolume, setMusicVolume] = useState(70);
   const [ambienceVolumes, setAmbienceVolumes] = useState({});
   const [currentMixName, setCurrentMixName] = useState('');
+  const [isForgotModalOpen, setForgotModalOpen] = useState(false); 
   // ---------------------------------------------------------------------
 
 
@@ -168,6 +170,10 @@ const deleteMix = async (mixId) => {
     setMusicVolume(parseInt(volume));
   };
 
+  const handleForgotPasswordClick = () => {
+    setAuthModalOpen(false);      // Tutup modal login
+    setForgotModalOpen(true);     // Buka modal lupa password
+  };
 
   // ----------------------------------------------------------------------------
 
@@ -262,7 +268,7 @@ useEffect(() => {
 
 
   return (
-    <div className="container">
+    <div className="container no-select">
       <Header
         user={user}
         onLoginClick={() => setAuthModalOpen(true)}
@@ -303,6 +309,11 @@ useEffect(() => {
             onAuthSuccess(userData);
             setAuthModalOpen(false);
         }}
+        onForgotPasswordClick={handleForgotPasswordClick}
+      />
+      <ForgotPasswordModal
+        isOpen={isForgotModalOpen}
+        onClose={() => setForgotModalOpen(false)}
       />
       <SaveMixModal
         isOpen={isSaveMixModalOpen}
