@@ -1,5 +1,5 @@
 // /src/components/SettingsPage.jsx
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import ForgotPasswordModal from './ForgotPasswordModal';
 
@@ -89,6 +89,7 @@ function SettingsPage( {onLogout} ) {
     }
   };
 
+ 
   return (
     <>
       <div className="settings-page-container">

@@ -22,7 +22,7 @@ function PlayerBar({ currentTrack, isAppPlaying, isMusicPlaying, onSaveMixClick,
             </div>
             <div className="save-btn-container"> 
                 <button className="save-btn" onClick={onSaveMixClick}>
-                    <i className="ri-save-line"></i>
+                    <i className="ri-add-line"></i>
                     <span>Save Mix</span>
                 </button>
             </div>

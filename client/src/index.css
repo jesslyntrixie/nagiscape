@@ -107,12 +107,6 @@ body::after {
   z-index: 999;
 }
 
-/* #root {
-  position: relative; 
-  z-index: 1; 
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;  */
 
 .container {
     width: 100%;
@@ -837,17 +831,13 @@ header {
 
 
 /* MY MIXES DROPDOWN */
-/* /src/index.css */
-
-/* Kontainer untuk tombol dan dropdown agar dropdown bisa diposisikan relatif terhadapnya */
 .my-mixes-container {
-  position: relative; /* Ini adalah kuncinya! */
+  position: relative; 
 }
 
-/* Style untuk dropdown panel */
 .mixes-dropdown-container {
   position: absolute;
-  top: 120%; /* Posisi sedikit di bawah tombol */
+  top: 120%; 
   right: 0;
   width: 300px;
   background-color: rgba(44, 42, 62, 0.8); 
@@ -871,11 +861,11 @@ header {
 
 .mixes-dropdown-list {
   padding: 8px;
-  max-height: 250px; /* Batas tinggi, setelah itu akan scroll */
+  max-height: 250px; 
   overflow-y: auto;
 }
 
-/* Style untuk item di dalam dropdown (sedikit diubah dari versi modal) */
+
 .mix-item-dropdown {
   display: flex;
   justify-content: space-between;
@@ -950,12 +940,25 @@ header {
 
 
 /* --- Halaman Settings --- */
+
 .settings-page-container {
-  max-width: 800px;
-  margin: 40px auto; /* Memberi jarak atas-bawah */
-  padding: 20px;
-  color: #f5f0e9; /* Warna teks utama */
+    width: 100%;
+    min-height: 100vh;
+    background-color: #2c2a3e;
+    color: #f5f0e9;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 40px 20px;
+    box-sizing: border-box;
 }
+
+.settings-header,
+.settings-content {
+    width: 100%;
+    max-width: 800px; /* Batas lebar maksimal untuk konten */
+}
+
 
 .settings-header {
   display: flex;
@@ -1136,22 +1139,30 @@ input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: tr
 
 
 /* CREDITS PAGE */
-/* /src/index.css */
-
-/* Ganti .settings-page-container dengan ini jika hanya dipakai di credits */
 .credits-page-container {
-  max-width: 1200px; /* Layout lebih lebar */
-  margin: 40px auto;
-  padding: 20px 40px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #2c2a3e; 
   color: #f5f0e9;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
 .credits-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Dua kolom dengan lebar sama */
-  gap: 40px; /* Jarak antar kolom */
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
   margin-top: 30px;
+  
+  width: 100%;
+  max-width: 1200px;
 }
+
 
 .credits-column .credits-header {
   display: flex;
@@ -1356,31 +1367,24 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   line-height: 1.6;
 }
 
-/* /src/index.css */
-
-/* ... (style modal yang sudah ada) ... */
-
-/* Container untuk link tambahan di dalam modal */
 .modal-extra-links {
   text-align: right;
-  margin-top: -10px; /* Tarik sedikit ke atas agar lebih dekat dengan input password */
+  margin-top: -10px; 
   margin-bottom: 15px;
 }
 
-/* Style untuk trigger forgot password */
 .forgot-password-trigger {
-  color: #d4c3a0; /* Gunakan warna highlight sekunder dari tema Anda */
+  color: #d4c3a0; 
   font-size: 14px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .forgot-password-trigger:hover {
-  color: #f7e6b9; /* Warna lebih cerah saat di-hover */
+  color: #f7e6b9; 
   text-decoration: underline;
 }
 
-/* Sedikit penyesuaian untuk pesan error agar tidak terlalu menempel */
 .modal-content .form-message.error {
   margin-top: 0;
   margin-bottom: 15px;
