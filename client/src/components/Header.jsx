@@ -82,11 +82,11 @@ function Header({ user, onLoginClick, onLogout, myMixes, onLoadMix, onDeleteMix 
   };
 
   return (
-    <header className='panelmain'>
+    <header className='glass-effect flex-between'>
       <div className="logo">nagiscape<span>_</span></div>
       <div className="header-right">
         <div className="my-mixes-container">
-          <button className="my-mixes-btn" onClick={handleMyMixesClick}>
+          <button className="btn btn--filled" onClick={handleMyMixesClick}>
             My Mixes
           </button>
           {isMixesOpen && (
@@ -99,7 +99,7 @@ function Header({ user, onLoginClick, onLogout, myMixes, onLoadMix, onDeleteMix 
         </div>
 
         <div className="profile-container">
-          <div className="profile-icon" onClick={handleProfileClick}>
+          <div className="profile-icon flex-center" onClick={handleProfileClick}>
             <i className="ri-user-line"></i>
           </div>
           {user && isProfileOpen && <ProfileDropdown user={user} onLogout={onLogout} />}

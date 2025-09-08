@@ -1,8 +1,45 @@
+/* =================================================================
+   1. SETUP & CONFIGURATION (VARIABLES & RESETS)
+   ================================================================= */
+:root {
+  /* Fonts */
+  --font-primary: 'MiSans', sans-serif;
+  --font-mono: 'Monospace', monospace;
+  
+  /* Colors */
+  --clr-background: #2c2a3e;
+  --clr-text-primary: #e0e0e0;
+  --clr-text-secondary: #f5f0e9; 
+  --clr-accent: #f7e6b9;
+  --clr-link: #a7d9ff;
+  --clr-accent-secondary: #d4c3a0;
+  --clr-bg-interactive: rgba(212, 195, 160, 0.3);
+  
+  /* Glassmorphism & Borders */
+  --clr-glass-bg: rgba(50, 48, 70, 0.1);
+  --clr-glass-border: rgba(255, 255, 255, 0.1);
+  --clr-bg-hover: rgba(212, 195, 160, 0.3);
+
+  /* Sizing & Radius */
+  --radius-lg: 16px;
+  --padding-md: 20px;
+  --space-lg: 24px;
+  --space-md: 15px;
+  --radius-sm: 8px;
+
+  /* header */
+  --clr-header-bg: rgba(44, 42, 62, 0.95);
+
+  /* Mobile version */
+  --icon-size: 24px;
+}
+
 @font-face {
     font-family: 'MiSans';
     src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap; /* DITAMBAHKAN: Optimasi loading font */
 }
 
 @font-face {
@@ -10,6 +47,7 @@
     src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
+    font-display: swap; /* DITAMBAHKAN */
 }
 
 @font-face {
@@ -17,6 +55,7 @@
     src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
+    font-display: swap; /* DITAMBAHKAN */
 }
 
 @font-face {
@@ -24,184 +63,208 @@
     src: url('https://assets-persist.lovart.ai/agent-static-assets/AlibabaSans-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap; /* DITAMBAHKAN */
 }
 
-
-.no-select {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE 10+ */
-  user-select: none;         /* Standar */
-}
-
-* {
+/* Modern CSS Reset */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-#background-video {
-  position: fixed; /* Menempel pada viewport */
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100; 
-  overflow: hidden; 
-  object-fit: cover; 
-  filter: brightness(60%) contrast(120%); 
-}
-
-.panelmain {
-  background-color: rgba(50, 48, 70, 0.1); /* Sedikit lebih gelap dari sebelumnya */
-  backdrop-filter: blur(1px); /* Tetap gunakan blur */
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: #f7e6b9; /* Contoh warna yang bagus dengan background gelap */
-}
-
-a {
-  color: #a7d9ff; /* Contoh warna link */
+html {
+  scroll-behavior: smooth; /* DITAMBAHKAN: Scrolling jadi mulus */
 }
 
 body {
-    font-family: 'MiSans', sans-serif;
-    /* background-color: #2c2a3e; */
-    color: #f5f0e9;
-    width: 100%;
+    font-family: var(--font-primary);
+    color: var(--clr-text-primary);
+    background-color: transparent; /* Untuk menjaga video background */
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #e0e0e0;
-  /* overflow: hidden; */
-    background-color: transparent; 
-    background-image: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--clr-accent);
+}
+
+a {
+  color: var(--clr-link);
+  text-decoration: none; /* DITAMBAHKAN: Umumnya link di web app tidak bergaris bawah */
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%; /* DITAMBAHKAN: Gambar jadi responsif secara default */
 }
 
 
-body::after {
-  content: '';
-  position: fixed; /* Menempel di seluruh layar */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+/* =================================================================
+   2. GLOBAL & UTILITY CLASSES
+   ================================================================= */
 
-  /* Terapkan filter SVG yang kita buat */
-  filter: url(#noiseFilter);
-
-  /* Atur seberapa kuat efek grain-nya */
-  opacity: 0.1; 
-
-  /* Pastikan overlay tidak bisa di-klik */
-  pointer-events: none; 
-
-  /* Atur posisi layer di antara background video dan konten */
-  z-index: 999;
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
+
+.panel {
+  padding: var(--padding-md, 25px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.glass-effect {
+  background-color: var(--clr-glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--clr-glass-border);
+}
 
 .container {
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    max-width: 1920px; /* Max-width for very large screens */
+    max-width: 1920px;
     margin: 0 auto;
 }
 
-/* Header Styles */
+/* =================================================================
+   3. PAGE-SPECIFIC STYLES (Backgrounds, Overlays)
+   ================================================================= */
+#background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -100; 
+  object-fit: cover; 
+  filter: brightness(60%) contrast(120%); 
+}
+
+/* Noise/grain overlay effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  filter: url(#noiseFilter);
+  opacity: 0.1; 
+  pointer-events: none; 
+  z-index: -99; /* Disesuaikan agar di atas video tapi di bawah konten */
+}
+
+/* =================================================================
+   4. LAYOUT COMPONENTS (Header, Main Content)
+   ================================================================= */
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
+    /* Menggunakan utility class .flex-between di HTML */
+    padding: var(--padding-md) 40px; 
     height: 80px;
-    background-color: rgba(44, 42, 62, 0.95);
-    border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+    background-color:  var(--clr-header-bg);
     position: relative; 
-    z-index: 20; 
+    z-index: var(--z-header, 20); 
 }
 
 .logo {
-    font-family: 'Monospace', monospace;
+    font-family: var(--font-mono);
     font-size: 28px;
-    color: #f7e6b9;
+    color: var(--clr-accent);
     letter-spacing: 1px;
 }
 
 .logo span {
-    color: #d4c3a0;
+    color: var(--clr-accent-secondary); 
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: var(--space-lg, 24px); 
 }
 
-.my-mixes-btn {
-    background-color: rgba(212, 195, 160, 0.2);
-    color: #f5f0e9;
-    border: 1px solid rgba(212, 195, 160, 0.4);
-    border-radius: 20px;
-    padding: 8px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+
+.btn {
+  display: inline-flex; 
+  align-items: center;
+  gap: var(--space-sm, 8px);
+  color: var(--clr-text-secondary);
+  border: 1px solid var(--clr-glass-border);
+  border-radius: 999px; 
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  text-decoration: none;
 }
 
-.my-mixes-btn:hover {
-    background-color: rgba(212, 195, 160, 0.3);
+.btn--filled {
+  background-color: var(--clr-glass-bg);
+}
+
+.btn--filled:hover {
+  background-color: var(--clr-bg-hover); 
 }
 
 .profile-icon {
+    /* Menggunakan utility class .flex-center di HTML */
     width: 40px;
     height: 40px;
-    background-color: #d4c3a0;
+    background-color: var(--clr-accent-secondary, #d4c3a0);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
     font-size: 20px;
-    color: #2c2a3e;
+    color: var(--clr-background);
 }
 
 /* Main Content Styles */
 .main-content {
     display: flex;
     flex: 1;
-    padding: 30px 40px;
-    gap: 30px;
+    padding: var(--space-xl, 30px) 40px;
+    gap: var(--space-xl, 30px);
     overflow: hidden; 
     position: relative; 
-    z-index: 10;
+    z-index: var(--z-content, 10);
 }
 
-/* Panel Styles - Glassmorphism */
-.panel {
-    background-color: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(6px);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 25px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+.left-panel, .right-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .left-panel {
     flex: 1;
-    min-width: 320px; /* Minimum width for the left panel */
+    min-width: 320px;
 }
 
 .right-panel {
@@ -209,279 +272,155 @@ header {
 }
 
 .panel-header {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: var(--padding-md);
 }
 
 .panel-title {
     font-size: 22px;
     font-weight: 500;
-    color: #f7e6b9;
+    color: var(--clr-accent);
 }
 
-/* Music Player Styles */
+
+/* =================================================================
+   5. PLAYER & MIXER COMPONENTS
+   ================================================================= */
+
+/* DITAMBAHKAN: Global style untuk semua slider di aplikasi */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-sm, 3px);
+  background: var(--clr-bg-interactive);
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--clr-accent);
+  cursor: pointer;
+}
+
+
+.interactive-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 15px);
+  padding: var(--space-sm, 12px) var(--space-md, 15px);
+  margin-bottom: var(--space-sm, 10px);
+  background-color: var(--clr-bg-interactive, rgba(212, 195, 160, 0.1));
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.interactive-list-item:hover {
+  background-color: var(--clr-bg-interactive-hover, rgba(212, 195, 160, 0.2));
+}
+
+
+/* --- Music Player Styles --- */
+
 .volume-control {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 15px);
+  margin-bottom: var(--space-lg, 25px);
+  padding-bottom: var(--space-md, 15px);
+  border-bottom: 1px solid var(--clr-glass-border);
 }
 
 .volume-icon {
-    font-size: 22px;
-    color: #d4c3a0;
+  font-size: 22px;
+  color: var(--clr-accent-secondary);
 }
 
-.slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 6px;
-    border-radius: 3px;
-    background: rgba(212, 195, 160, 0.3);
-    outline: none;
-    cursor: pointer;
+.track-list, .ambience-list {
+  overflow-y: auto;
+  flex: 1; /* Trik penting: membuat list ini mengisi sisa ruang di panel */
+  padding-right: var(--space-xs, 5px); /* Sedikit padding agar scrollbar tidak menempel */
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #f7e6b9;
-    cursor: pointer;
-}
-
-.track-list {
-    overflow-y: auto;
-    flex: 1; /* Allow track list to fill available space */
-    padding-right: 10px;
-}
-
-.track-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    background-color: rgba(212, 195, 160, 0.1);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.track-item:hover {
-    background-color: rgba(212, 195, 160, 0.2);
-}
-
+/* .track-item sekarang hanya modifier, style utama ada di .interactive-list-item */
 .track-item.active {
-    background-color: rgba(247, 230, 185, 0.2);
-    border-left: 4px solid #f7e6b9;
-    padding-left: 11px;
+  background-color: var(--clr-accent-transparent, rgba(247, 230, 185, 0.2));
+  border-left: 4px solid var(--clr-accent);
+  padding-left: calc(var(--space-md, 15px) - 4px);
+}
+
+.track-thumbnail, .ambience-icon {
+  /* Menggunakan .flex-center di HTML akan lebih baik, tapi ini juga bisa */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 20px;
 }
 
 .track-thumbnail {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    background-color: #d4c3a0;
-    margin-right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: #2c2a3e;
-    flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background-color: var(--clr-accent-secondary);
+  color: var(--clr-background);
 }
 
 .track-info {
-    flex: 1;
-    min-width: 0;
+  flex: 1;
+  min-width: 0; /* Mencegah teks mendorong elemen lain */
 }
 
-.track-title {
-    font-size: 16px;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.track-title, .ambience-name {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .track-artist {
-    font-size: 14px;
-    color: rgba(245, 240, 233, 0.7);
+  font-size: 14px;
+  color: var(--clr-text-muted, rgba(245, 240, 233, 0.7));
 }
 
 .track-controls {
-    font-size: 22px;
-    color: #f7e6b9;
+  font-size: 22px;
+  color: var(--clr-accent);
 }
 
-/* Ambience Mixer Styles */
-.ambience-list {
-    display: flex; /* Changed from grid */
-    flex-direction: column; /* Stacks items vertically */
-    gap: 15px; /* Spacing between items */
-    overflow-y: auto;
-    flex: 1;
-    padding-right: 10px;
-}
 
-.ambience-item {
-    background-color: rgba(212, 195, 160, 0.1);
-    border-radius: 12px;
-    padding: 15px 20px; /* Adjusted padding */
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center; /* Vertically align items */
-    gap: 15px; /* Add gap between header and slider */
-}
-
-.ambience-item:hover {
-    background-color: rgba(212, 195, 160, 0.2);
-}
+/* --- Ambience Mixer Styles --- */
 
 .ambience-header {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0; /* Prevent header from shrinking */
-    width: 200px; /* Give a fixed width to align sliders */
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 200px; /* Lebar ini spesifik, jadi biarkan saja */
+  gap: var(--space-md, 15px);
 }
 
 .ambience-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background-color: rgba(247, 230, 185, 0.2);
-    margin-right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: #f7e6b9;
+  width: 40px;
+  height: 40px;
+  background-color: var(--clr-accent-transparent, rgba(247, 230, 185, 0.2));
+  color: var(--clr-accent);
 }
 
-.ambience-name {
-    font-size: 18px;
-    font-weight: 500;
-    white-space: nowrap; /* Prevent text from wrapping */
+.ambience-slider-wrapper {
+  width: 100%;
 }
 
-.ambience-slider {
-    width: 100%; /* Slider takes remaining width */
-}
 
-/* Footer Player Bar Styles */
-.player-bar {
-    height: 90px;
-    /* background-color: rgba(44, 42, 62, 0.95); */
-    border-top: 1px solid rgba(212, 195, 160, 0.2);
-    display: flex;
-    align-items: center;
-    padding: 0 40px;
-    gap: 20px; 
-}
-
-.now-playing, .save-btn-container {
-    flex: 1; 
-    min-width: 0; 
-}
-
-.now-playing {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    min-width: 0; 
-    overflow: hidden;
-    justify-content: flex-start;
-}
-
-.now-playing-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    background-color: #d4c3a0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #2c2a3e;
-    flex-shrink: 0;
-}
-
-.now-playing-info {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Hide overflowed text */
-}
-
-.now-playing-label {
-    font-size: 14px;
-    color: rgba(245, 240, 233, 0.7);
-}
-
-.now-playing-name {
-    font-size: 18px;
-    font-weight: 500;
-    color: #f5f0e9;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-shrink: 0;
-}
-
-.play-pause-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #f7e6b9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    color: #2c2a3e;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    /* position: fixed; */
-}
-
-.play-pause-btn:hover {
-    background-color: #d4c3a0;
-}
-
-.save-btn-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.save-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: rgba(212, 195, 160, 0.2);
-    color: #f5f0e9;
-    border: 1px solid rgba(212, 195, 160, 0.4);
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.save-btn:hover {
-    background-color: rgba(212, 195, 160, 0.3);
-}
+/* =================================================================
+   6. GLOBAL STYLES (Scrollbar, Decorations)
+   ================================================================= */
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -489,20 +428,19 @@ header {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(44, 42, 62, 0.5);
-    border-radius: 10px;
+    background: transparent; /* Dibuat transparan agar menyatu */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(212, 195, 160, 0.5);
-    border-radius: 10px;
+    background: var(--clr-accent-transparent, rgba(212, 195, 160, 0.5));
+    border-radius: var(--radius-lg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(212, 195, 160, 0.7);
+    background: var(--clr-accent-secondary, rgba(212, 195, 160, 0.7));
 }
 
-/* Decorative elements - hidden on smaller screens for clarity */
+/* Decorative elements */
 .anime-decoration {
     position: absolute;
     opacity: 0.1;
@@ -514,114 +452,211 @@ header {
     left: 50px;
     width: 200px;
     height: 200px;
-    border: 2px solid #f7e6b9;
+    border: 2px solid var(--clr-accent);
     border-radius: 50%;
 }
+/* ... dan seterusnya untuk dekorasi lain ... */
 
-.decoration-2 {
-    bottom: 150px;
-    right: 100px;
-    width: 300px;
-    height: 300px;
-    border: 2px dashed #d4c3a0;
+
+/* =================================================================
+   7. FOOTER PLAYER BAR
+   ================================================================= */
+
+.player-bar {
+    height: 90px;
+    border-top: 1px solid var(--clr-glass-border);
+    padding: 0 var(--space-xl, 40px);
+    gap: var(--space-md);
+}
+
+.now-playing, .save-btn-container {
+    flex: 1; 
+    min-width: 0; 
+}
+
+.now-playing {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    overflow: hidden;
+}
+
+.now-playing-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    background-color: var(--clr-accent-secondary);
+    color: var(--clr-background);
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.now-playing-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.now-playing-label {
+    font-size: 14px;
+    color: var(--clr-text-muted);
+}
+
+.now-playing-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--clr-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-controls {
+    flex-shrink: 0;
+}
+
+.play-pause-btn {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    transform: rotate(20deg);
+    background-color: var(--clr-accent);
+    color: var(--clr-background);
+    font-size: 28px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
 }
 
-.decoration-3 {
-    top: 300px;
-    right: 400px;
-    width: 150px;
-    height: 150px;
-    background-color: rgba(247, 230, 185, 0.05);
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+.play-pause-btn:hover {
+    background-color: var(--clr-accent-secondary);
 }
 
-/* --- Responsive Adjustments --- */
+.save-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}/* GANTI TOTAL BLOK @MEDIA (MAX-WIDTH: 767PX) DENGAN INI */
 
-/* For Tablets and smaller screens */
-@media (max-width: 1024px) {
+@media (max-width: 767px) {
+    /* 1. LAYOUT & SCROLLING FIX */
+    .container { height: 100dvh; }
+
     .main-content {
+        padding: 15px;
+        gap: 15px;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
         flex-direction: column;
-        padding: 20px;
-        gap: 20px;
-        overflow-y: auto;
     }
 
-    .left-panel {
-        max-width: 100%;
+    .left-panel, .right-panel {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    /* Proporsi seimbang agar panel musik tidak terpotong */
+    .left-panel, .right-panel {
+        flex: 1; 
     }
 
     .track-list, .ambience-list {
-        max-height: 300px; /* Adjust height for smaller view */
+        flex: 1; 
+        overflow-y: auto;
+        max-height: none;
+    }
+
+    /* ======================================================= */
+    /* KUNCI UTAMA: Mengatur ulang header & slider di mobile   */
+    /* ======================================================= */
+
+    
+    .mobile-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .volume-control {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 15px;
+      flex-basis: 55%; 
+      margin: 0;
+      padding: 0;
+      border: none; 
     }
     
-    .ambience-header {
-        width: auto; /* Allow width to be flexible */
+    /* 2. UKURAN FONT & ITEM YANG LEBIH KECIL */
+    header { 
+      padding: 15px; 
+      height: 70px; 
     }
-
-    .decoration-2, .decoration-3 {
-        display: none; /* Hide some decorations to reduce clutter */
-    }
-
+    
     .player-bar {
-        padding: 0 20px;
+        padding: 10px 15px;
+        height: 80px;
+        gap: 10px;
+    }
+
+    .interactive-list-item { 
+      padding: 8px 12px; 
+      gap: 12px; 
+      margin-bottom: 8px; 
+    }
+    .track-thumbnail { width: 40px; height: 40px; }
+    .logo { font-size: 22px; }
+    .panel-title { font-size: 18px; }
+    .track-title, .ambience-name { font-size: 14px; }
+    .track-artist { font-size: 12px; }
+    .now-playing-label { font-size: 12px; }
+    .now-playing-name { font-size: 14px; }
+    .my-mixes-btn, .btn { padding: 8px 14px; font-size: 14px; }
+
+    /* 3. TOMBOL MENJADI IKON */
+    .player-bar button{
+        font-size: var(--icon-size);
+        padding: 0px; 
+        gap: 0;
+        width: 44px; 
+        height: 44px; 
+        flex-shrink: 0; 
+        display: inline-flex;
+        align-items: center; justify-content: center;
+        border: none;
+        background-color: transparent;
+        color: var(--clr-accent);
+    }
+
+    .player-bar button:hover{
+        font-size: var(--icon-size);
+        padding: 0px; 
+        gap: 0;
+        width: 44px; 
+        height: 44px; 
+        flex-shrink: 0; 
+        display: inline-flex;
+        align-items: center; justify-content: center;
+        border: none;
+        background-color: transparent;
+        color: var(--clr-accent);
+    }
+
+    .save-btn-container span { 
+      display: none; 
     }
 }
 
-/* For Mobile phones */
-@media (max-width: 767px) {
-    header, .player-bar {
-        padding: 15px;
-    }
 
-    .logo {
-        font-size: 24px;
-    }
-    
-    .main-content {
-        padding: 15px;
-    }
 
-    .my-mixes-btn {
-        padding: 6px 16px;
-        font-size: 14px;
-    }
-    
-    .save-btn {
-            font-size: 0; /* Hide text, show only icon */
-            padding: 10px;
-            gap: 0;
-    }
-    .save-btn span {
-        display: none;
-    }
-    .save-btn .ri-save-line {
-        font-size: 20px;
-        margin: 0;
-    }
 
-    .now-playing-name {
-        font-size: 16px;
-    }
-}
+
+
 /* --- Modal / Pop-up Styles --- */
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Sedikit lebih gelap agar fokus ke modal */
-  backdrop-filter: blur(8px); /* Efek blur untuk background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0; /* Mulai dari transparan */
-  animation: fadeIn 0.3s forwards; /* Animasi fade in */
-}
+
 
 /* Animasi untuk overlay */
 @keyframes fadeIn {
@@ -630,21 +665,6 @@ header {
   }
 }
 
-.modal-content {
-  /* Menggunakan style panel utama (glassmorphism) */
-  background-color: rgba(50, 48, 70, 0.8); /* Warna lebih solid dari panel utama */
-  backdrop-filter: blur(15px);
-  border-radius: 16px; /* Samakan dengan .panel */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Shadow lebih jelas */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px 35px;
-  width: 90%;
-  max-width: 420px;
-  position: relative;
-  color: #f5f0e9; /* Samakan dengan warna teks body */
-  transform: scale(0.95); /* Mulai dari skala kecil */
-  animation: scaleUp 0.3s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28); /* Animasi scale up */
-}
 
 /* Animasi untuk konten modal */
 @keyframes scaleUp {

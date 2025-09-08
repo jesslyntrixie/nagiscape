@@ -5,31 +5,30 @@ import React from 'react';
 function MusicPlayer({ tracks, currentTrack, isPlaying, onTrackSelect, musicVolume, onMusicVolumeChange, disabled }) {
 
   return (
-    <div className={`panel left-panel ${disabled ? 'disabled' : ''}`}>
-      <div className="panel-header">
-        <h2 className="panel-title">Music Tracks</h2>
+    <div className={`panel glass-effect left-panel ${disabled ? 'disabled' : ''}`}>
+      <div className={'mobile-header'}>
+        <div className="panel-header flex-between">
+          <h2 className="panel-title">Music Tracks</h2>
+        </div>
+        <div className="volume-control">
+          <i className="ri-volume-up-line volume-icon"></i>
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            value={musicVolume} 
+            onChange={(e) => onMusicVolumeChange(e.target.value)}
+            disabled={disabled}
+          />
+        </div>
       </div>
-      
-      <div className="volume-control">
-        <i className="ri-volume-up-line volume-icon"></i>
-        <input 
-          type="range" 
-          min="0" 
-          max="100" 
-          value={musicVolume} 
-          onChange={(e) => onMusicVolumeChange(e.target.value)}
-          className="slider"
-          disabled={disabled}
-        />
-      </div>
-
       <div className="track-list">
         {tracks.map(track => {
           const isActive = currentTrack?._id === track._id;
 
           return (
               <div
-                className={`track-item ${isActive ? 'active' : ''}`}
+                className={`track-item interactive-list-item ${isActive ? 'active' : ''}`}
                 key={track._id}
                 onClick={() => onTrackSelect(track)}
               >

@@ -2,18 +2,16 @@
 
 import React from 'react';
 
-// Tambahkan 'disabled' sebagai prop
 function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange, disabled }) {
     return(
-        // Tambahkan class 'disabled' jika prop disabled bernilai true
-        <div className={`panel right-panel ${disabled ? 'disabled' : ''}`}>
+        <div className={`panel glass-effect right-panel ${disabled ? 'disabled' : ''}`}>
             <div className="panel-header">
                 <h2 className="panel-title">Ambience Mixer</h2>
             </div>
             
             <div className="ambience-list">
                 {sounds.map((sound) => (
-                    <div className="ambience-item" key={sound._id}>
+                    <div className="track-item interactive-list-item" key={sound._id}>
                         <div className="ambience-header">
                             <div className="ambience-icon"><i className={sound.icon}></i></div>
                             <div className="ambience-name">{sound.name}</div>
@@ -24,7 +22,7 @@ function AmbienceMixer({ sounds = [], volumes = {}, onVolumeChange, disabled }) 
                             max="100" 
                             value={volumes[sound._id] || 0} 
                             onChange={(e) => onVolumeChange(sound._id, e.target.value)}
-                            className="slider ambience-slider"
+                            className="ambience-slider"
                             // Tambahkan properti disabled
                             disabled={disabled}
                         />
