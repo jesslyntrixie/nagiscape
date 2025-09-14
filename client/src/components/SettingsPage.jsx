@@ -100,7 +100,7 @@ function SettingsPage( {onLogout} ) {
         
         <div className="settings-content">
           {/* Change Password Section */}
-          <div className="settings-section">
+          <div className="settings-section panel glass-effect">
             <h3>Change Password</h3>
             <form onSubmit={handleSubmit}>
               <label>Current password</label>

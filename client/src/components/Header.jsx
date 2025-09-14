@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'; // Diperlukan untuk ProfileDropdown
 
 function ProfileDropdown({ user, onLogout }) {
   return (
-    <div className="profile-dropdown-container">
+    <div className="profile-dropdown-container dropdown-panel">
       <div className="dropdown-item user-email">{user.email}</div>
       <Link to="/settings" className="dropdown-item">
         Settings
@@ -35,7 +35,7 @@ function MixesDropdown({ mixes, onLoadMix, onDeleteMix }) {
   }
 
   return (
-    <div className="mixes-dropdown-container">
+    <div className="mixes-dropdown-container dropdown-panel">
       <div className="mixes-dropdown-header">
         <h4>My Mixes</h4>
       </div>

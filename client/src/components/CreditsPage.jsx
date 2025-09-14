@@ -33,7 +33,6 @@ function CreditsPage({ musicTracks = [], ambienceSounds = [] }) {
           </ul>
         </div>
 
-        {/* Kolom untuk Ambience */}
         <div className="credits-column">
           <div className="credits-header">
             <i className="ri-volume-up-line"></i>

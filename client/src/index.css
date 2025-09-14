@@ -2,36 +2,82 @@
    1. SETUP & CONFIGURATION (VARIABLES & RESETS)
    ================================================================= */
 :root {
+  /* Colors */
+  --clr-background: #2c2a3e;
+  --clr-text-primary: #e0e0e0;
+  --clr-text-secondary: #f5f0e9;
+  --clr-text-muted: rgba(245, 240, 233, 0.7);
+
+  --clr-accent: #f7e6b9;
+  --clr-accent-secondary: #d4c3a0;
+  --clr-link: #a7d9ff;
+  
+  --clr-bg-interactive: rgba(212, 195, 160, 0.3);
+  --clr-bg-hover: rgba(212, 195, 160, 0.4);
+  --clr-modal-background: rgba(255, 255, 255, 0.07);
+
+  /* Glassmorphism */
+  --clr-glass-bg: rgba(50, 48, 70, 0.1);
+  --clr-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Form States */
+  --clr-success: #4dff9e;
+  --clr-success-bg: rgba(77, 255, 158, 0.15);
+  --clr-success-border: rgba(77, 255, 158, 0.4);
+  --clr-error: #ffc2c2;
+  --clr-error-bg: rgba(255, 77, 77, 0.15);
+  --clr-error-border: rgba(255, 77, 77, 0.4);
+
+  /* Sizing & Spacing */
+  --space-sm: 8px;
+  --space-md: 15px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  
+  --padding-sm: 10px;
+  --padding-md: 20px;
+  --padding-lg: 30px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
   /* Fonts */
   --font-primary: 'MiSans', sans-serif;
   --font-mono: 'Monospace', monospace;
   
-  /* Colors */
-  --clr-background: #2c2a3e;
-  --clr-text-primary: #e0e0e0;
-  --clr-text-secondary: #f5f0e9; 
-  --clr-accent: #f7e6b9;
-  --clr-link: #a7d9ff;
-  --clr-accent-secondary: #d4c3a0;
-  --clr-bg-interactive: rgba(212, 195, 160, 0.3);
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 22px;
+  --font-size-xl: 28px;
   
-  /* Glassmorphism & Borders */
-  --clr-glass-bg: rgba(50, 48, 70, 0.1);
-  --clr-glass-border: rgba(255, 255, 255, 0.1);
-  --clr-bg-hover: rgba(212, 195, 160, 0.3);
+  --font-weight-regular: normal;
+  --font-weight-medium: 500;
+  --font-weight-bold: bold;
 
-  /* Sizing & Radius */
-  --radius-lg: 16px;
-  --padding-md: 20px;
-  --space-lg: 24px;
-  --space-md: 15px;
-  --radius-sm: 8px;
-
-  /* header */
-  --clr-header-bg: rgba(44, 42, 62, 0.95);
-
-  /* Mobile version */
+  /* Misc */
   --icon-size: 24px;
+
+  :root {
+  /* ... variabel-variabel yang sudah ada ... */
+
+  /* Solid Components (Untuk Settings Page, dll.) */
+  --clr-solid-bg: #35334a;
+  --clr-solid-border: rgba(212, 195, 160, 0.2);
+  
+  --clr-input-bg-solid: #262436;
+
+  --clr-btn-primary-bg: #4a4762;
+  --clr-btn-primary-bg-hover: #5d5a7b;
+
+  --clr-btn-danger-bg: #5e3232;
+  --clr-btn-danger-bg-hover: #7a4242;
+  --clr-btn-danger-border: #a14b4b;
+  --clr-btn-danger-text: #ffc2c2;
+}
 }
 
 @font-face {
@@ -39,7 +85,7 @@
     src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap; /* DITAMBAHKAN: Optimasi loading font */
+    font-display: swap; 
 }
 
 @font-face {
@@ -282,11 +328,34 @@ header {
 }
 
 
+
+/* DISABLED */
+
+.panel.disabled {
+    pointer-events: none;     
+    opacity: 0.6;         
+    transition: opacity 0.3s ease;
+}
+
+
+.panel.disabled .slider,
+.panel.disabled .track-item {
+    cursor: not-allowed;
+}
+input[type="range"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+    background: #8a8a8a; /* Warna thumb yang lebih gelap saat disabled */
+}
+
+
 /* =================================================================
    5. PLAYER & MIXER COMPONENTS
    ================================================================= */
 
-/* DITAMBAHKAN: Global style untuk semua slider di aplikasi */
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
@@ -333,7 +402,7 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
   gap: var(--space-md, 15px);
   margin-bottom: var(--space-lg, 25px);
-  padding-bottom: var(--space-md, 15px);
+  padding-bottom: var(--space-lg, 15px);
   border-bottom: 1px solid var(--clr-glass-border);
 }
 
@@ -366,8 +435,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .track-thumbnail {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: var(--clr-accent-secondary);
   color: var(--clr-background);
 }
@@ -577,7 +646,6 @@ input[type="range"]::-webkit-slider-thumb {
 }/* GANTI TOTAL BLOK @MEDIA (MAX-WIDTH: 767PX) DENGAN INI */
 
 @media (max-width: 767px) {
-    /* 1. LAYOUT & SCROLLING FIX */
     .container { height: 100dvh; }
 
     .main-content {
@@ -595,7 +663,6 @@ input[type="range"]::-webkit-slider-thumb {
         min-height: 0;
     }
 
-    /* Proporsi seimbang agar panel musik tidak terpotong */
     .left-panel, .right-panel {
         flex: 1; 
     }
@@ -606,11 +673,7 @@ input[type="range"]::-webkit-slider-thumb {
         max-height: none;
     }
 
-    /* ======================================================= */
-    /* KUNCI UTAMA: Mengatur ulang header & slider di mobile   */
-    /* ======================================================= */
 
-    
     .mobile-header {
       display: flex;
       flex-direction: row;
@@ -622,14 +685,13 @@ input[type="range"]::-webkit-slider-thumb {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      padding: 15px;
+      /* padding: 15px; */
       flex-basis: 55%; 
       margin: 0;
       padding: 0;
       border: none; 
     }
     
-    /* 2. UKURAN FONT & ITEM YANG LEBIH KECIL */
     header { 
       padding: 15px; 
       height: 70px; 
@@ -655,7 +717,6 @@ input[type="range"]::-webkit-slider-thumb {
     .now-playing-name { font-size: 14px; }
     .my-mixes-btn, .btn { padding: 8px 14px; font-size: 14px; }
 
-    /* 3. TOMBOL MENJADI IKON */
     .player-bar button{
         font-size: var(--icon-size);
         padding: 0px; 
@@ -698,125 +759,122 @@ input[type="range"]::-webkit-slider-thumb {
 
 
 
+/* =================================================================
+   8. DROPDOWN STYLES
+   ================================================================= */
 
-
-
-/* --- Modal / Pop-up Styles --- */
-
-
-
-/* Animasi untuk overlay */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-
-/* Animasi untuk konten modal */
-@keyframes scaleUp {
-  to {
-    transform: scale(1);
-  }
-}
-
-.modal-close-btn {
+/* Base class untuk semua panel dropdown */
+.dropdown-panel {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: rgba(245, 240, 233, 0.6); /* Warna teks transparan */
-  cursor: pointer;
-  transition: all 0.2s ease;
+  top: 120%; 
+  right: 0;
+  background-color: var(--clr-header-bg); 
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg); 
+  border: 1px solid var(--clr-glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out; 
 }
 
-.modal-close-btn:hover {
-  color: #f7e6b9; /* Warna highlight saat hover */
-  transform: rotate(90deg);
+/* Wadah untuk trigger dropdown */
+.my-mixes-container,
+.profile-container { 
+  position: relative; 
 }
 
-.modal-content h2 {
-  font-family: 'MiSans', sans-serif; /* Pastikan font konsisten */
-  font-size: 24px;
-  font-weight: 500;
-  color: #f7e6b9; /* Warna judul panel */
-  margin-top: 0;
-  margin-bottom: 25px;
-  text-align: center;
+/* Kelas spesifik sekarang hanya berisi lebar (width) */
+.mixes-dropdown-container {
+  width: 300px;
 }
 
-.modal-content label {
+.profile-dropdown-container {
+  width: 240px; 
+}
+
+
+/* --- Elemen di Dalam Dropdown --- */
+
+/* Style umum untuk semua item yang bisa diklik */
+.dropdown-item {
   display: block;
-  margin-bottom: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--clr-text-secondary);
+  text-decoration: none;
   font-size: 15px;
-  color: rgba(245, 240, 233, 0.8); /* Warna teks yang lebih cerah */
+}
+.dropdown-item:hover { 
+  background-color: var(--clr-bg-interactive);
 }
 
-.modal-content input[type="text"],
-.modal-content input[type="email"],
-.modal-content input[type="password"] {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 18px;
-  border-radius: 8px; /* Border radius lebih halus */
-  border: 1px solid rgba(212, 195, 160, 0.3); /* Border sesuai tema */
-  background-color: rgba(44, 42, 62, 0.8); /* Background input lebih gelap */
-  color: #f5f0e9;
-  font-size: 16px;
-  font-family: 'MiSans', sans-serif;
-  transition: all 0.3s ease;
-}
-
-.modal-content input:focus {
-  outline: none;
-  border-color: #d4c3a0; /* Warna highlight saat input aktif */
-  box-shadow: 0 0 0 3px rgba(212, 195, 160, 0.2);
-}
-
-.modal-action-btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  /* Menggunakan warna yang lebih cocok dengan tema (dari .my-mixes-btn) */
-  background-color: rgba(212, 195, 160, 0.3);
-  border: 1px solid rgba(212, 195, 160, 0.5);
-  color: #f7e6b9;
-  font-size: 16px;
-  font-weight: 500; /* Medium weight */
-  cursor: pointer;
-  margin-top: 10px;
-  transition: all 0.3s ease;
-}
-
-.modal-action-btn:hover {
-  background-color: rgba(212, 195, 160, 0.4);
-  box-shadow: 0 4px 15px rgba(212, 195, 160, 0.1);
-}
-
-.modal-toggle-text {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: rgba(245, 240, 233, 0.8);
-}
-
-.modal-toggle-text span {
-  color: #f7e6b9; /* Warna highlight */
-  cursor: pointer;
+/* Item email di profile dropdown */
+.user-email { 
+  color: var(--clr-accent-secondary);
+  font-size: 14px; 
+  cursor: default; 
   font-weight: 500;
-  transition: color 0.2s ease;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--clr-glass-border);
+}
+.user-email:hover { 
+  background-color: transparent; 
 }
 
-.modal-toggle-text span:hover {
-  text-decoration: underline;
-  color: #d4c3a0;
+/* Item logout */
+.logout-item { 
+  color: var(--clr-error);
 }
+.logout-item:hover {
+  background-color: var(--clr-error-bg);
+}
+
+
+/* --- Elemen Spesifik Dropdown "My Mixes" --- */
+
+.mixes-dropdown-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--clr-glass-border);
+  margin-bottom: 8px;
+}
+
+.mixes-dropdown-header h4 {
+  margin: 0;
+  color: var(--clr-text-secondary);
+}
+
+.mixes-dropdown-list {
+  padding: 0 8px 8px;
+  max-height: 250px; 
+  overflow-y: auto;
+}
+
+.mix-item-dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+}
+.mix-item-dropdown:hover {
+  background-color: var(--clr-bg-interactive);
+}
+
+.mix-item-name {
+  font-weight: 500;
+}
+
+.mix-item-controls {
+  display: flex;
+}
+
 
 /* MY MIXES MODAL */
-
 .my-mixes-list {
   margin-top: 20px;
   max-height: 300px;
@@ -837,39 +895,29 @@ input[type="range"]::-webkit-slider-thumb {
   font-weight: 500;
 }
 
-/* .mix-item-controls .control-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: 8px;
-} */
- .mix-icon-btn {
+.mix-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%; /* Membuatnya jadi lingkaran */
-  cursor: pointer;
+  border-radius: 50%; 
   transition: background-color 0.2s ease;
   margin-left: 8px;
 }
 
 .mix-icon-btn i {
-  font-size: 18px; /* Ukuran ikon */
-  color: #c0c0e0; /* Warna ikon default */
+  font-size: 18px; 
+  color: #c0c0e0; 
   transition: color 0.2s ease;
 }
 
-/* Style saat mouse diarahkan (hover) */
 .mix-icon-btn.load-icon:hover {
   background-color: rgba(138, 79, 255, 0.2);
 }
 
 .mix-icon-btn.load-icon:hover i {
-  color: #8a4fff; /* Warna ungu tema */
+  color: #8a4fff; 
 }
 
 .mix-icon-btn.delete-icon:hover {
@@ -877,7 +925,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .mix-icon-btn.delete-icon:hover i {
-  color: #ff4d4d; /* Warna merah untuk delete */
+  color: #ff4d4d;   
 }
 
 .control-btn.load-btn {
@@ -896,134 +944,28 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 20px 0;
 }
 
-
-/* MY MIXES DROPDOWN */
-.my-mixes-container {
-  position: relative; 
-}
-
-.mixes-dropdown-container {
-  position: absolute;
-  top: 120%; 
-  right: 0;
-  width: 300px;
-  background-color: rgba(44, 42, 62, 0.8); 
-  backdrop-filter: blur(10px);
-  border-radius: 12px; 
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  padding: 8px;
-  animation: fadeIn 0.2s ease-out; 
-}
-
-.mixes-dropdown-header {
-  padding: 12px 16px;
-  border-bottom: 1px solid #4a4a6a;
-}
-
-.mixes-dropdown-header h4 {
-  margin: 0;
-  color: #e0e0e0;
-}
-
-.mixes-dropdown-list {
-  padding: 8px;
-  max-height: 250px; 
-  overflow-y: auto;
-}
-
-
-.mix-item-dropdown {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 8px;
-  border-radius: 5px;
-  margin-bottom: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.mix-item-dropdown:hover {
-  background-color: #3e3e52;
-}
 /* ================================================================= */
-/* PROFILE DROPDOWN & SETTINGS PAGE STYLES          */
+/* 9. PAGE SPECIFIC: SETTINGS PAGE AND CREDITS PAGE       */
 /* ================================================================= */
-
-/* --- Dropdown Profil --- */
-.profile-container { 
-  position: relative; 
-}
-
-.profile-dropdown-container {
-  position: absolute;
-  top: 120%; 
-  right: 0;
-  width: 240px; 
-  background-color: rgba(44, 42, 62, 0.8); 
-  backdrop-filter: blur(10px);
-  border-radius: 12px; 
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  padding: 8px;
-  animation: fadeIn 0.2s ease-out; 
-}
-
-.dropdown-item {
-  padding: 10px 14px;
-  border-radius: 8px; /* Border radius lebih besar */
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: #f5f0e9; /* Warna teks utama */
-  text-decoration: none;
-  display: block;
-  font-size: 15px;
-}
-
-.dropdown-item:hover { 
-  background-color: rgba(212, 195, 160, 0.2); /* Warna hover konsisten */
-}
-
-.user-email { 
-  color: #d4c3a0; /* Warna highlight sekunder */
-  font-size: 14px; 
-  cursor: default; 
-  font-weight: 500;
-  padding-bottom: 8px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(212, 195, 160, 0.2); /* Garis pemisah */
-}
-
-.user-email:hover { 
-  background-color: transparent; 
-}
-
-.logout-item { 
-  color: #ff8a8a; /* Warna untuk aksi destruktif */
-}
-.logout-item:hover {
-  background-color: rgba(255, 77, 77, 0.2);
-}
-
 
 /* --- Halaman Settings --- */
 
-.settings-page-container {
+.settings-page-container, .credits-page-container {
     width: 100%;
     min-height: 100vh;
-    background-color: #2c2a3e;
-    color: #f5f0e9;
+    background-color: var(--clr-background);
+    color: var(--clr-text-secondary);
     display: flex;
     flex-direction: column;
     align-items: center; 
-    padding: 40px 20px;
+    padding: var(--padding-md)*2 var(--padding-md);
     box-sizing: border-box;
 }
 
 .settings-header,
 .settings-content {
     width: 100%;
-    max-width: 800px; /* Batas lebar maksimal untuk konten */
+    max-width: 800px; 
 }
 
 
@@ -1032,18 +974,18 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(212, 195, 160, 0.2); /* Garis pemisah konsisten */
+  border-bottom: 1px solid var(--clr-bg-interactive); 
 }
 
 .settings-header h2 {
   margin: 0 0 0 20px;
-  font-size: 28px; /* Ukuran font lebih besar, seperti .logo */
+  font-size: 28px; 
   font-weight: 500;
-  color: #f7e6b9; /* Warna highlight utama */
+  color: var(--clr-accent);
 }
 
 .back-link {
-  color: #d4c3a0; /* Warna highlight sekunder */
+  color: var(--clr-accent-secondary);
   text-decoration: none;
   font-size: 16px;
   display: inline-flex;
@@ -1052,60 +994,58 @@ input[type="range"]::-webkit-slider-thumb {
   transition: color 0.2s ease;
 }
 .back-link:hover {
-  color: #f7e6b9;
+  color: var(--clr-accent);
 }
 
-/* Menggunakan style .panel untuk setiap seksi pengaturan */
 .settings-section {
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: var(--clr-modal-background);
   backdrop-filter: blur(10px);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 25px 30px; /* Padding lebih besar */
+  border: 1px solid var(--clr-glass-border);
+  padding: 25px 30px; 
   margin-bottom: 25px;
 }
 
 .settings-section h3 { 
   margin-top: 0; 
-  font-size: 20px; /* Ukuran font seperti .panel-title */
+  font-size: 20px; 
   font-weight: 500;
-  color: #f7e6b9; /* Warna highlight utama */
-  margin-bottom: 25px; /* Jarak bawah dari judul ke konten */
+  color: var(--clr-accent); 
+  margin-bottom: 25px; 
 }
 
 .settings-section label { 
   display: block; 
-  margin: 18px 0 8px; /* Jarak antar input lebih besar */
-  color: #d4c3a0; /* Warna highlight sekunder */
+  margin: 18px 0 8px; 
+  color: var(--clr-accent-secondary);
   font-size: 15px;
 }
 
-/* Menggunakan style input dari modal agar konsisten */
 .settings-section input[type="password"] {
   width: 100%;
-  max-width: 450px; /* Sedikit lebih lebar */
+  max-width: 450px; 
   padding: 12px 15px;
   border-radius: 8px;
-  border: 1px solid rgba(212, 195, 160, 0.3);
-  background-color: rgba(44, 42, 62, 0.8);
-  color: #f5f0e9;
+  border: 1px solid var(--clr-input-border);
+  background-color: var(--clr-input-bg);
+  color: var(--clr-input-text);
   font-size: 16px;
   transition: all 0.3s ease;
 }
+
 .settings-section input[type="password"]:focus {
   outline: none;
-  border-color: #d4c3a0;
+  border-color: var(--clr-accent-secondary);
   box-shadow: 0 0 0 3px rgba(212, 195, 160, 0.2);
 }
 
-/* Menggunakan style tombol dari modal agar konsisten */
 .action-btn {
   padding: 10px 20px;
   width: auto;
   border: 1px solid rgba(212, 195, 160, 0.5);
-  background-color: rgba(212, 195, 160, 0.3);
-  color: #f7e6b9;
+  background-color: var(--clr-btn-solid);
+  color: var(--clr-accent);
   font-size: 15px;
   font-weight: 500;
   border-radius: 8px;
@@ -1113,7 +1053,7 @@ input[type="range"]::-webkit-slider-thumb {
   transition: all 0.3s ease;
 }
 .action-btn:hover {
-  background-color: rgba(212, 195, 160, 0.4);
+  background-color: var(--clr-btn-solid-hover) ;
 }
 
 .delete-btn { 
@@ -1121,6 +1061,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-color: rgba(255, 77, 77, 0.5);
   color: #ff8a8a;
 }
+
 .delete-btn:hover {
   background-color: rgba(255, 77, 77, 0.3);
 }
@@ -1133,13 +1074,14 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .link-btn { 
-  color: #d4c3a0; /* Warna link lebih lembut */
+  color: var(--clr-accent-secondary); 
   text-decoration: none; 
   font-size: 14px; 
   transition: color 0.2s ease;
   background-color: transparent;
   border: none;
 }
+
 .link-btn:hover {
   color: #f7e6b9;
   text-decoration: underline;
@@ -1148,6 +1090,7 @@ input[type="range"]::-webkit-slider-thumb {
 .danger-zone { 
   border-color: rgba(255, 77, 77, 0.4); 
 }
+
 .danger-zone p {
   color: rgba(245, 240, 233, 0.7);
   margin-bottom: 20px;
@@ -1169,22 +1112,60 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: 10px;
 }
 
-/* --- Toggle Switch (Sama seperti sebelumnya, sudah bagus) --- */
-.switch { position: relative; display: inline-block; width: 50px; height: 28px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(44, 42, 62, 0.8); border: 1px solid rgba(212, 195, 160, 0.3); transition: .4s; border-radius: 28px; }
-.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #d4c3a0; transition: .4s; border-radius: 50%; }
-input:checked + .toggle-slider { background-color: #f7e6b9; }
-input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: translateX(22px); }
+.switch { 
+  position: relative; 
+  display: inline-block; 
+  width: 50px; 
+  height: 28px; 
+}
+
+.switch input { 
+  opacity: 0; 
+  width: 0; 
+  height: 0; 
+}
+
+.toggle-slider { 
+  position: absolute; 
+  cursor: pointer; 
+  top: 0; left: 0; 
+  right: 0; 
+  bottom: 0; 
+  background-color: 
+  rgba(44, 42, 62, 0.8); 
+  border: 1px solid rgba(212, 195, 160, 0.3); 
+  transition: .4s; 
+  border-radius: 28px; 
+}
+
+.toggle-slider:before { 
+  position: absolute; 
+  content: ""; 
+  height: 20px; 
+  width: 20px; 
+  left: 3px; 
+  bottom: 3px; 
+  background-color: #d4c3a0; 
+  transition: .4s; 
+  border-radius: 50%; 
+}
+
+input:checked + .toggle-slider { 
+  background-color: #f7e6b9; 
+}
+
+input:checked + .toggle-slider:before { 
+  background-color: #2c2a3e; transform: translateX(22px); 
+}
 
 
-/* /src/index.css */
 
-/* Untuk pesan error (misal: password tidak cocok) */
+/* --- Form Messages (Success/Error) --- */
+
 .form-message.error {
-  background-color: rgba(255, 77, 77, 0.15);
-  border: 1px solid rgba(255, 77, 77, 0.4);
-  color: #ffc2c2; /* Warna teks error yang lebih lembut */
+  background-color: var(--clr-error-bg);
+  border: 1px solid var(--clr-error-border);
+  color: var(--clr-error); 
   padding: 12px 15px;
   border-radius: 8px;
   margin-top: 20px;
@@ -1192,64 +1173,58 @@ input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: tr
   text-align: center;
 }
 
-/* Untuk pesan sukses (misal: password berhasil diubah) */
 .form-message.success {
-  background-color: rgba(77, 255, 158, 0.15);
-  border: 1px solid rgba(77, 255, 158, 0.4);
-  color: #b3ffda; /* Warna teks sukses */
+  background-color: var(--clr-success-bg);
+  border: 1px solid var(--clr-success-border);
+  color: var(--clr-success);
   padding: 12px 15px;
   border-radius: 8px;
   margin-top: 20px;
   font-size: 15px;
   text-align: center;
 }
-
 
 /* CREDITS PAGE */
 .credits-page-container {
   width: 100%;
   min-height: 100vh;
-  background-color: #2c2a3e; 
-  color: #f5f0e9;
-  
+  background-color: var(--clr-background);
+  color: var(--clr-text-secondary);
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  
-  padding: 40px 20px;
+  align-items: center;
+  padding: var(--space-xl) var(--padding-md);
   box-sizing: border-box;
 }
 
 .credits-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 30px;
-  
+  gap: var(--space-xl);
+  margin-top: var(--padding-lg);
   width: 100%;
   max-width: 1200px;
 }
 
-
 .credits-column .credits-header {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(212, 195, 160, 0.2);
+  gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--padding-md);
+  border-bottom: 1px solid var(--clr-glass-border);
 }
 
 .credits-column .credits-header i {
-  font-size: 24px;
-  color: #d4c3a0;
+  font-size: var(--font-size-lg);
+  color: var(--clr-accent-secondary);
 }
 
 .credits-column .credits-header h3 {
   margin: 0;
   font-size: 20px;
-  font-weight: 500;
-  color: #f7e6b9;
+  font-weight: var(--font-weight-medium);
+  color: var(--clr-accent);
 }
 
 .credits-list {
@@ -1261,136 +1236,65 @@ input:checked + .toggle-slider:before { background-color: #2c2a3e; transform: tr
   display: flex;
   flex-direction: column;
   background-color: rgba(212, 195, 160, 0.05);
-  border-radius: 10px;
-  padding: 15px 20px;
-  margin-bottom: 12px;
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--padding-md);
+  margin-bottom: var(--radius-md);
   transition: all 0.2s ease;
   border: 1px solid transparent;
 }
 
 .credit-item:hover {
-  border-color: rgba(212, 195, 160, 0.2);
+  border-color: var(--clr-glass-border);
   background-color: rgba(212, 195, 160, 0.1);
   transform: translateY(-2px);
 }
 
 .credit-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #f5f0e9;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--clr-text-secondary);
   margin-bottom: 4px;
 }
 
 .credit-artist {
-  font-size: 14px;
-  color: rgba(245, 240, 233, 0.7);
-  margin-bottom: 12px;
+  font-size: var(--font-size-sm);
+  color: var(--clr-text-muted);
+  margin-bottom: var(--radius-md);
 }
 
 .credit-source {
   font-size: 13px;
-  color: #d4c3a0;
+  color: var(--clr-accent-secondary);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  align-self: flex-start; /* Tombol source rata kiri */
+  align-self: flex-start;
 }
 
 .credit-source:hover {
-  color: #f7e6b9;
+  color: var(--clr-accent);
   text-decoration: underline;
 }
 
-/* Responsif untuk layar lebih kecil */
 @media (max-width: 800px) {
   .credits-grid {
-    grid-template-columns: 1fr; /* Tumpuk menjadi satu kolom */
-    gap: 50px; /* Jarak lebih besar saat ditumpuk */
+    grid-template-columns: 1fr;
+    gap: 50px;
   }
 
   .credits-page-container {
-    padding: 20px;
+    padding: var(--padding-md);
   }
 }
 
+/* =================================================================
+   10. MODAL STYLES (Untuk Auth, Forgot Password, Save Mix, etc.)
+   ================================================================= */
 
-/* Gaya untuk panel saat dinonaktifkan */
-.panel.disabled {
-    pointer-events: none; /* Mencegah semua event mouse (klik, hover) */
-    opacity: 0.6;         /* Membuatnya terlihat pudar */
-    transition: opacity 0.3s ease;
-}
-
-/* Atau, styling yang lebih spesifik jika tidak ingin seluruh panel non-aktif */
-.panel.disabled .slider,
-.panel.disabled .track-item {
-    cursor: not-allowed;
-}
-
-/* Styling untuk slider saat disabled */
-input[type="range"]:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-input[type="range"]:disabled::-webkit-slider-thumb {
-    background: #8a8a8a; /* Warna thumb yang lebih gelap saat disabled */
-}
-
-
-/* ================================================================= */
-/* MODAL STYLES (Untuk Auth, Forgot Password, Save Mix, etc.) */
-/* ================================================================= */
-
-.modal-overlay {
-  /* 1. Kunci Utama: Posisi 'fixed' */
-  /* Ini membuat overlay menutupi seluruh jendela browser, bukan hanya parent-nya. */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
-  /* 2. Efek Gelap & Blur */
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  
-  /* 3. Posisi Konten di Tengah */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  /* 4. Pastikan di Atas Segalanya */
-  z-index: 1000;
-  
-  /* 5. Animasi Halus */
-  opacity: 0;
-  animation: fadeIn 0.3s forwards;
-}
-
+/* --- Animasi --- */
 @keyframes fadeIn {
   to { opacity: 1; }
-}
-
-.modal-content {
-  /* Menggunakan style panel utama (glassmorphism) */
-  background-color: rgba(50, 48, 70, 0.8);
-  backdrop-filter: blur(15px);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  padding: 30px 35px;
-  width: 90%;
-  max-width: 420px;
-  position: relative;
-  color: #f5f0e9;
-
-  /* Animasi muncul dari bawah dan membesar */
-  transform: scale(0.95) translateY(10px);
-  opacity: 0;
-  animation: scaleUp 0.3s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 @keyframes scaleUp {
@@ -1400,6 +1304,41 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   }
 }
 
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+  background-color: rgba(50, 48, 70, 0.8);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 35px;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  color: #f5f0e9;
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+  animation: scaleUp 0.3s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+
+/* --- Elemen di Dalam Modal --- */
 .modal-close-btn {
   position: absolute;
   top: 15px;
@@ -1418,11 +1357,12 @@ input[type="range"]:disabled::-webkit-slider-thumb {
 }
 
 .modal-content h2 {
+  font-family: 'MiSans', sans-serif;
   font-size: 24px;
   font-weight: 500;
   color: #f7e6b9;
   margin-top: 0;
-  margin-bottom: 10px; /* Jarak dikurangi */
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -1432,6 +1372,53 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   margin-bottom: 25px;
   font-size: 15px;
   line-height: 1.6;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: rgba(245, 240, 233, 0.8);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 195, 160, 0.3);
+  background-color: rgba(44, 42, 62, 0.8);
+  color: #f5f0e9;
+  font-size: 16px;
+  font-family: 'MiSans', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #d4c3a0;
+  box-shadow: 0 0 0 3px rgba(212, 195, 160, 0.2);
+}
+
+.modal-action-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(212, 195, 160, 0.5);
+  border-radius: 8px;
+  background-color: rgba(212, 195, 160, 0.3);
+  color: #f7e6b9;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.modal-action-btn:hover {
+  background-color: rgba(212, 195, 160, 0.4);
+  box-shadow: 0 4px 15px rgba(212, 195, 160, 0.1);
 }
 
 .modal-extra-links {
@@ -1458,17 +1445,21 @@ input[type="range"]:disabled::-webkit-slider-thumb {
   text-align: center;
 }
 
-
-
-/* --- STYLING UNTUK IKON MATA BAWAAN BROWSER --- */
-
-/* Menargetkan ikon mata di browser berbasis WebKit (Chrome, Edge, Opera) */
-input[type="password"]::-webkit-password-reveal-button {
-  /* Properti 'filter' adalah cara terbaik untuk mengubah warna ikon bawaan.
-    Nilai di bawah ini akan mengubah ikon hitam menjadi warna yang 
-    sesuai dengan tema Anda (#d4c3a0, warna krem/kuning pucat).
-  */
-  filter: invert(85%) sepia(10%) saturate(600%) hue-rotate(3deg) brightness(95%) contrast(90%);
+.modal-toggle-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(245, 240, 233, 0.8);
 }
 
+.modal-toggle-text span {
+  color: #f7e6b9;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
 
+.modal-toggle-text span:hover {
+  text-decoration: underline;
+  color: #d4c3a0;
+}
