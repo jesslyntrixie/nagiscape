@@ -61,23 +61,11 @@
   /* Misc */
   --icon-size: 24px;
 
-  :root {
-  /* ... variabel-variabel yang sudah ada ... */
 
-  /* Solid Components (Untuk Settings Page, dll.) */
-  --clr-solid-bg: #35334a;
-  --clr-solid-border: rgba(212, 195, 160, 0.2);
-  
-  --clr-input-bg-solid: #262436;
+  --clr-glass-bg-darker: rgba(50, 48, 70, 0.8);
+  --clr-input-bg-glass: rgba(44, 42, 62, 0.8);
 
-  --clr-btn-primary-bg: #4a4762;
-  --clr-btn-primary-bg-hover: #5d5a7b;
 
-  --clr-btn-danger-bg: #5e3232;
-  --clr-btn-danger-bg-hover: #7a4242;
-  --clr-btn-danger-border: #a14b4b;
-  --clr-btn-danger-text: #ffc2c2;
-}
 }
 
 @font-face {
@@ -948,51 +936,51 @@ input[type="range"]::-webkit-slider-thumb {
 /* 9. PAGE SPECIFIC: SETTINGS PAGE AND CREDITS PAGE       */
 /* ================================================================= */
 
-/* --- Halaman Settings --- */
 
-.settings-page-container, .credits-page-container {
-    width: 100%;
-    min-height: 100vh;
-    background-color: var(--clr-background);
-    color: var(--clr-text-secondary);
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    padding: var(--padding-md)*2 var(--padding-md);
-    box-sizing: border-box;
+/* --- Halaman Settings --- */
+.settings-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--clr-background);
+  color: var(--clr-text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  padding: var(--space-xl) var(--padding-md);
+  box-sizing: border-box;
 }
 
 .settings-header,
 .settings-content {
-    width: 100%;
-    max-width: 800px; 
+  width: 100%;
+  max-width: 800px;
 }
-
 
 .settings-header {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--clr-bg-interactive); 
+  margin-bottom: var(--padding-lg);
+  padding-bottom: var(--padding-md);
+  border-bottom: 1px solid var(--clr-solid-border);
 }
 
 .settings-header h2 {
-  margin: 0 0 0 20px;
-  font-size: 28px; 
-  font-weight: 500;
+  margin: 0 0 0 var(--padding-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
   color: var(--clr-accent);
 }
 
 .back-link {
   color: var(--clr-accent-secondary);
   text-decoration: none;
-  font-size: 16px;
+  font-size: var(--font-size-base);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-sm);
   transition: color 0.2s ease;
 }
+
 .back-link:hover {
   color: var(--clr-accent);
 }
@@ -1000,24 +988,24 @@ input[type="range"]::-webkit-slider-thumb {
 .settings-section {
   background-color: var(--clr-modal-background);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--clr-glass-border);
   padding: 25px 30px; 
-  margin-bottom: 25px;
+  margin-bottom: var(--space-lg);
 }
 
 .settings-section h3 { 
   margin-top: 0; 
-  font-size: 20px; 
-  font-weight: 500;
-  color: var(--clr-accent); 
-  margin-bottom: 25px; 
+  font-size: 20px;
+  font-weight: var(--font-weight-medium);
+  color: var(--clr-accent);
+  margin-bottom: var(--space-lg);
 }
 
 .settings-section label { 
   display: block; 
-  margin: 18px 0 8px; 
+  margin: var(--font-size-md) 0 var(--space-sm); 
   color: var(--clr-accent-secondary);
   font-size: 15px;
 }
@@ -1026,11 +1014,11 @@ input[type="range"]::-webkit-slider-thumb {
   width: 100%;
   max-width: 450px; 
   padding: 12px 15px;
-  border-radius: 8px;
-  border: 1px solid var(--clr-input-border);
-  background-color: var(--clr-input-bg);
-  color: var(--clr-input-text);
-  font-size: 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-solid-border);
+  background-color: var(--clr-input-bg-glass);
+  color: var(--clr-text-secondary);
+  font-size: var(--font-size-base);
   transition: all 0.3s ease;
 }
 
@@ -1041,25 +1029,25 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .action-btn {
-  padding: 10px 20px;
-  width: auto;
+  padding: var(--padding-sm) var(--padding-md);
   border: 1px solid rgba(212, 195, 160, 0.5);
-  background-color: var(--clr-btn-solid);
+  background-color: var(--clr-bg-interactive);
   color: var(--clr-accent);
   font-size: 15px;
-  font-weight: 500;
-  border-radius: 8px;
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .action-btn:hover {
-  background-color: var(--clr-btn-solid-hover) ;
+  background-color: var(--clr-bg-hover);
 }
 
 .delete-btn { 
-  background-color: rgba(255, 77, 77, 0.2); 
-  border-color: rgba(255, 77, 77, 0.5);
-  color: #ff8a8a;
+  background-color: var(--clr-error-bg); 
+  border-color: var(--clr-error-border);
+  color: var(--clr-error);
 }
 
 .delete-btn:hover {
@@ -1067,33 +1055,34 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .form-actions { 
-  margin-top: 25px; 
+  margin-top: var(--space-lg); 
   display: flex; 
   align-items: center; 
-  gap: 20px; 
+  gap: var(--padding-md); 
 }
 
 .link-btn { 
-  color: var(--clr-accent-secondary); 
+  color: var(--clr-accent-secondary);
   text-decoration: none; 
-  font-size: 14px; 
+  font-size: var(--font-size-sm); 
   transition: color 0.2s ease;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .link-btn:hover {
-  color: #f7e6b9;
+  color: var(--clr-accent);
   text-decoration: underline;
 }
 
 .danger-zone { 
-  border-color: rgba(255, 77, 77, 0.4); 
+  border-color: var(--clr-error-border); 
 }
 
 .danger-zone p {
-  color: rgba(245, 240, 233, 0.7);
-  margin-bottom: 20px;
+  color: var(--clr-text-muted);
+  margin-bottom: var(--padding-md);
   max-width: 500px;
 }
 
@@ -1103,61 +1092,44 @@ input[type="range"]::-webkit-slider-thumb {
   align-items: center;
   max-width: 450px; 
 }
+
 .preference-item span {
-  font-size: 16px;
+  font-size: var(--font-size-base);
 }
 
 .save-changes-container { 
   text-align: right; 
-  margin-top: 10px;
+  margin-top: var(--padding-sm);
 }
 
-.switch { 
-  position: relative; 
-  display: inline-block; 
-  width: 50px; 
-  height: 28px; 
+.switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--clr-input-bg-glass); border: 1px solid var(--clr-solid-border); transition: .4s; border-radius: 28px; }
+.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: var(--clr-accent-secondary); transition: .4s; border-radius: 50%; }
+input:checked + .toggle-slider { background-color: var(--clr-accent); }
+input:checked + .toggle-slider:before { background-color: var(--clr-background); transform: translateX(22px); }
+
+.form-message.error {
+  background-color: var(--clr-error-bg);
+  border: 1px solid var(--clr-error-border);
+  color: var(--clr-error);
+  padding: 12px 15px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--padding-md);
+  font-size: 15px;
+  text-align: center;
 }
 
-.switch input { 
-  opacity: 0; 
-  width: 0; 
-  height: 0; 
+.form-message.success {
+  background-color: var(--clr-success-bg);
+  border: 1px solid var(--clr-success-border);
+  color: var(--clr-success);
+  padding: 12px 15px;
+  border-radius: var(--radius-sm);
+  margin-top: var(--padding-md);
+  font-size: 15px;
+  text-align: center;
 }
-
-.toggle-slider { 
-  position: absolute; 
-  cursor: pointer; 
-  top: 0; left: 0; 
-  right: 0; 
-  bottom: 0; 
-  background-color: 
-  rgba(44, 42, 62, 0.8); 
-  border: 1px solid rgba(212, 195, 160, 0.3); 
-  transition: .4s; 
-  border-radius: 28px; 
-}
-
-.toggle-slider:before { 
-  position: absolute; 
-  content: ""; 
-  height: 20px; 
-  width: 20px; 
-  left: 3px; 
-  bottom: 3px; 
-  background-color: #d4c3a0; 
-  transition: .4s; 
-  border-radius: 50%; 
-}
-
-input:checked + .toggle-slider { 
-  background-color: #f7e6b9; 
-}
-
-input:checked + .toggle-slider:before { 
-  background-color: #2c2a3e; transform: translateX(22px); 
-}
-
 
 
 /* --- Form Messages (Success/Error) --- */
