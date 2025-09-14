@@ -401,11 +401,10 @@ input[type="range"]::-webkit-slider-thumb {
 
 .track-list, .ambience-list {
   overflow-y: auto;
-  flex: 1; /* Trik penting: membuat list ini mengisi sisa ruang di panel */
-  padding-right: var(--space-xs, 5px); /* Sedikit padding agar scrollbar tidak menempel */
+  flex: 1; 
+  padding-right: var(--space-xs, 5px); 
 }
 
-/* .track-item sekarang hanya modifier, style utama ada di .interactive-list-item */
 .track-item.active {
   background-color: var(--clr-accent-transparent, rgba(247, 230, 185, 0.2));
   border-left: 4px solid var(--clr-accent);
@@ -413,7 +412,6 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .track-thumbnail, .ambience-icon {
-  /* Menggunakan .flex-center di HTML akan lebih baik, tapi ini juga bisa */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,7 +429,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .track-info {
   flex: 1;
-  min-width: 0; /* Mencegah teks mendorong elemen lain */
+  min-width: 0; 
 }
 
 .track-title, .ambience-name {
@@ -459,7 +457,7 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  width: 200px; /* Lebar ini spesifik, jadi biarkan saja */
+  width: 200px; 
   gap: var(--space-md, 15px);
 }
 
@@ -497,22 +495,6 @@ input[type="range"]::-webkit-slider-thumb {
     background: var(--clr-accent-secondary, rgba(212, 195, 160, 0.7));
 }
 
-/* Decorative elements */
-.anime-decoration {
-    position: absolute;
-    opacity: 0.1;
-    z-index: -1;
-}
-
-.decoration-1 {
-    top: 100px;
-    left: 50px;
-    width: 200px;
-    height: 200px;
-    border: 2px solid var(--clr-accent);
-    border-radius: 50%;
-}
-/* ... dan seterusnya untuk dekorasi lain ... */
 
 
 /* =================================================================
@@ -631,7 +613,7 @@ input[type="range"]::-webkit-slider-thumb {
 .save-btn-container {
   display: flex;
   justify-content: flex-end;
-}/* GANTI TOTAL BLOK @MEDIA (MAX-WIDTH: 767PX) DENGAN INI */
+}
 
 @media (max-width: 767px) {
     .container { height: 100dvh; }
@@ -751,12 +733,11 @@ input[type="range"]::-webkit-slider-thumb {
    8. DROPDOWN STYLES
    ================================================================= */
 
-/* Base class untuk semua panel dropdown */
 .dropdown-panel {
   position: absolute;
   top: 120%; 
   right: 0;
-  background-color: var(--clr-header-bg); 
+  background-color: var(--clr-input-bg-glass); 
   backdrop-filter: blur(10px);
   border-radius: var(--radius-lg); 
   border: 1px solid var(--clr-glass-border);
@@ -766,13 +747,11 @@ input[type="range"]::-webkit-slider-thumb {
   animation: fadeIn 0.2s ease-out; 
 }
 
-/* Wadah untuk trigger dropdown */
 .my-mixes-container,
 .profile-container { 
   position: relative; 
 }
 
-/* Kelas spesifik sekarang hanya berisi lebar (width) */
 .mixes-dropdown-container {
   width: 300px;
 }
@@ -784,7 +763,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* --- Elemen di Dalam Dropdown --- */
 
-/* Style umum untuk semua item yang bisa diklik */
 .dropdown-item {
   display: block;
   padding: 10px 14px;
@@ -799,7 +777,6 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: var(--clr-bg-interactive);
 }
 
-/* Item email di profile dropdown */
 .user-email { 
   color: var(--clr-accent-secondary);
   font-size: 14px; 
@@ -813,7 +790,6 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: transparent; 
 }
 
-/* Item logout */
 .logout-item { 
   color: var(--clr-error);
 }
