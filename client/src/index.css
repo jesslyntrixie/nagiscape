@@ -294,7 +294,9 @@ header {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding-bottom: 55px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+
 }
 
 .left-panel {
@@ -405,6 +407,11 @@ input[type="range"]::-webkit-slider-thumb {
   padding-right: var(--space-xs, 5px); 
 }
 
+.ambience-list{
+      padding-top: 10px;
+    }
+
+
 .track-item.active {
   background-color: var(--clr-accent-transparent, rgba(247, 230, 185, 0.2));
   border-left: 4px solid var(--clr-accent);
@@ -425,6 +432,8 @@ input[type="range"]::-webkit-slider-thumb {
   height: 40px;
   background-color: var(--clr-accent-secondary);
   color: var(--clr-background);
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 .track-info {
@@ -448,6 +457,9 @@ input[type="range"]::-webkit-slider-thumb {
 .track-controls {
   font-size: 22px;
   color: var(--clr-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -466,6 +478,8 @@ input[type="range"]::-webkit-slider-thumb {
   height: 40px;
   background-color: var(--clr-accent-transparent, rgba(247, 230, 185, 0.2));
   color: var(--clr-accent);
+  margin-top: 1px;
+  margin-bottom: 1px
 }
 
 .ambience-slider-wrapper {
@@ -483,7 +497,9 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent; /* Dibuat transparan agar menyatu */
+    /* background: transparent;  */
+    background: transparent; 
+    border-radius: var(--radius-lg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -631,9 +647,6 @@ input[type="range"]::-webkit-slider-thumb {
         display: flex;
         flex-direction: column;
         min-height: 0;
-    }
-
-    .left-panel, .right-panel {
         flex: 1; 
     }
 
@@ -643,6 +656,7 @@ input[type="range"]::-webkit-slider-thumb {
         max-height: none;
     }
 
+    
 
     .mobile-header {
       display: flex;
