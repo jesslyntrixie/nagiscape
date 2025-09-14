@@ -294,6 +294,7 @@ header {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding-bottom: 55px;
 }
 
 .left-panel {
@@ -324,7 +325,6 @@ header {
     opacity: 0.6;         
     transition: opacity 0.3s ease;
 }
-
 
 .panel.disabled .slider,
 .panel.disabled .track-item {
