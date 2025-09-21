@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/sounds/:path*",
+      "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/sounds/:path*"
+    },
+    {
+      "source": "/images/:path*",
+      "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/images/:path*"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/api/:path*"
     }
