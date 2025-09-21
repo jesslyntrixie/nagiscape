@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/sounds/:path*",
-      "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/sounds/:path*"
+      "destination": "https://nagiscape-server.vercel.app/sounds/:path*"
     },
     {
       "source": "/images/:path*",
-      "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/images/:path*"
+      "destination": "https://nagiscape-server.vercel.app/images/:path*"
     },
     {
       "source": "/api/:path*",
-      "destination": "https://NAGISCAPE-SERVER-URL.vercel.app/api/:path*"
+      "destination": "https://nagiscape-server.vercel.app/api/:path*"
     }
   ]
 }
