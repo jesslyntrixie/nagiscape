@@ -97,34 +97,25 @@ function SettingsPage( {onLogout} ) {
           <Link to="/" className="back-link">&larr; Back to Player</Link>
           <h2>Settings</h2>
         </header>
-        
+
         <div className="settings-content">
           {/* Change Password Section */}
           <div className="settings-section panel glass-effect">
             <h3>Change Password</h3>
             <form onSubmit={handleSubmit}>
               <label>Current password</label>
-              <input 
-              type="password" 
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              <input type="password" value={currentPassword} onChange={(e)=> setCurrentPassword(e.target.value)}
               required/>
               <label>New password</label>
-              <input 
-              type="password" 
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              <input type="password" value={newPassword} onChange={(e)=> setNewPassword(e.target.value)}
               required/>
               <label>Confirm new password</label>
-              <input 
-              type="password" 
-              value={confirmPassword}
-              onChange={(e) => {setConfirmPassword(e.target.value)}}
+              <input type="password" value={confirmPassword} onChange={(e)=> {setConfirmPassword(e.target.value)}}
               required
               />
               <div className="form-actions">
                 <button type="submit" className="action-btn">Update Password</button>
-                <button onClick= {() => setForgotModalOpen(true)}className="link-btn">Forgot password?</button>
+                <button onClick={()=> setForgotModalOpen(true)}className="link-btn">Forgot password?</button>
               </div>
               {error && <p className="form-message error">{error}</p>}
               {successMessage && <p className="form-message success">{successMessage}</p>}
@@ -150,21 +141,43 @@ function SettingsPage( {onLogout} ) {
               </label>
             </div>
           </div> */}
-          
+
           {/* About Section */}
           <div className="settings-section">
-          <h3>About & Credits</h3>
-            <p>Nagiscape v1.0.0 - A relaxing soundscape experience.</p>
-            <div className="form-actions">
-              {/* Gunakan Link dari React Router */}
+            <h3>About Nagiscape</h3>
+            <div className="about-grid">
+              <div className="about-column">
+                <h4>The Mission</h4>
+                <p className="about-description">
+                  Nagiscape was created to help you find focus, relaxation, or sleep through a personalized sound
+                  environment. Mix and match ambient sounds with soothing music to create your perfect soundscape.
+                </p>
+              </div>
+              <div className="about-column">
+                <h4>Tech & Contact</h4>
+                <p className="tech-stack">
+                  <strong>Built with:</strong> React, Node.js, Express, MongoDB
+                </p>
+                <div className="social-links">
+                  <a href="https://github.com/jesslyntrixie/nagiscape" target="_blank" rel="noopener noreferrer" title="GitHub"><i
+                      className="ri-github-fill"></i></a>
+                  <a href="https://linkedin.com/in/jesslyn-trixie-edvilie" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i
+                      className="ri-linkedin-box-fill"></i></a>
+                  <a href="https://instagram.com/jesslyntrixie" target="_blank" rel="noopener noreferrer" title="Portfolio"><i
+                      className="ri-global-line"></i></a>
+                </div>
+              </div>
+            </div>
+            <div className="form-actions"
+              style={{marginTop: '20px', borderTop: '1px solid rgba(212, 195, 160, 0.2)', paddingTop: '25px'}}>
               <Link to="/credits" className="action-btn">
-                View Credits & Attributions
+              View Full Credits & Attributions
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <ForgotPasswordModal isOpen={isForgotModalOpen} onClose={() => setForgotModalOpen(false)} />
+      <ForgotPasswordModal isOpen={isForgotModalOpen} onClose={()=> setForgotModalOpen(false)} />
     </>
   );
 }

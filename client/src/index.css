@@ -1122,6 +1122,36 @@ input:checked + .toggle-slider:before { background-color: var(--clr-background);
 }
 
 
+.about-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Kolom kiri lebih besar */
+  gap: 40px;
+}
+
+.about-column h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #d4c3a0;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-stack {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(245, 240, 233, 0.8);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .about-grid {
+    grid-template-columns: 1fr; 
+    gap: 30px;
+  }
+}
+
+
 /* --- Form Messages (Success/Error) --- */
 
 .form-message.error {
