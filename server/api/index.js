@@ -11,12 +11,14 @@ const ambienceRoutes = require('../routes/ambienceRoutes');
 const trackRoutes = require('../routes/trackRoutes'); 
 const userRoutes = require('../routes/userRoutes'); 
 const { errorHandler } = require('../middleware/errorMiddleware');
+const path = require('path');
 
 const app = express();
 
 // Middleware
 app.use(cors()); 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 const connectDB = async () => {
   if (mongoose.connection.readyState === 0) {
@@ -35,7 +37,7 @@ app.use('/api/mixes', mixRoutes);
 app.use('/api/ambience', ambienceRoutes);
 app.use('/api/track', trackRoutes); 
 app.use('/api/users', userRoutes);
-app.use(express.static('public'));
+
 
 app.get('/api', (req, res) => {
     res.send('Server working!');
