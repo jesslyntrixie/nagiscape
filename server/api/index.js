@@ -35,6 +35,7 @@ app.use('/api/mixes', mixRoutes);
 app.use('/api/ambience', ambienceRoutes);
 app.use('/api/track', trackRoutes); 
 app.use('/api/users', userRoutes);
+app.use(express.static('public'));
 
 app.get('/api', (req, res) => {
     res.send('Server working!');
