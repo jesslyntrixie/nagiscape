@@ -20,6 +20,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use((req, res, next) => {
+  console.log(`Request Diterima: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 const connectDB = async () => {
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(process.env.MONGO_URI);
